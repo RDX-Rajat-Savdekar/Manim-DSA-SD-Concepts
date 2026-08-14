@@ -1,0 +1,123 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+
+// FRONTMATTER = runs at BUILD / SSR time in Node — never in the visitor's browser.
+const builtAt = new Date().toISOString();
+const pageFact = "This string was computed in the --- frontmatter --- before HTML shipped.";
+---
+
+<LearnLayout title="01 · Astro basics" session="01">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 01 · Astro</p>
+    <h1>Pages, components, public, scripts</h1>
+    <p>
+      Astro’s job: ship HTML fast, then optionally wake up JavaScript islands for animation.
+      Everything on this page is teaching that split.
+    </p>
+  </header>
+
+  <section class="learn-section">
+    <h2>1. A page file = a URL</h2>
+    <p>
+      This file is <code>src/pages/learn/01-astro-basics.astro</code>, so the URL is
+      <strong>/learn/01-astro-basics</strong>. No router config. Folder structure is the router.
+    </p>
+    <div class="learn-code">src/pages/index.astro           → /
+src/pages/learn/index.astro     → /learn
+src/pages/learn/01-….astro      → /learn/01-…
+src/components/…                → NOT a URL (only if imported)</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>2. Three zones in one <code>.astro</code> file</h2>
+
+    <h3><span class="learn-badge learn-badge--build">build</span> Frontmatter</h3>
+    <p>Between <code>---</code> fences. Good for imports, props typing, reading files, dates.</p>
+    <div class="learn-demo">
+      <div class="learn-demo__label">Live output from frontmatter</div>
+      <p class="s1-static">{pageFact}</p>
+      <p class="s1-static" style="margin-top:0.5rem">
+        <span class="learn-badge learn-badge--build">builtAt</span>
+        {builtAt}
+      </p>
+    </div>
+
+    <h3><span class="learn-badge learn-badge--build">build</span> Template</h3>
+    <p>HTML/CSS below the frontmatter becomes static markup in the response.</p>
+    <div class="learn-demo">
+      <div class="learn-demo__label">Static HTML (no JS needed)</div>
+      <div class="s1-static" id="static-box">I am already in the HTML when you View Source.</div>
+    </div>
+
+    <h3><span class="learn-badge learn-badge--client">client</span> Script</h3>
+    <p>
+      A <code>&lt;script&gt;</code> in an Astro file is bundled and runs in the browser. This is
+      where GSAP / Three live.
+    </p>
+    <div class="learn-demo">
+      <div class="learn-demo__label">Filled by client JS after load</div>
+      <div class="s1-live" data-client-msg>…waiting for island…</div>
+      <div class="s1-box" data-s1-box></div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-s1-pulse>Pulse the box (GSAP)</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>3. <code>public/</code> is copied as-is</h2>
+    <p>
+      Put a file in <code>public/learn/astro-mark.svg</code> → it is served at
+      <code>/learn/astro-mark.svg</code>. No import required. Same pattern as your HDRIs and
+      sequence frames.
+    </p>
+    <div class="learn-demo">
+      <div class="learn-demo__label">From public/</div>
+      <img class="s1-public-img" src="/learn/astro-mark.svg" alt="Learn mark from public folder" />
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>Right-click → View Page Source. Find the static sentence. Confirm the scramble/live message is empty or placeholder in the raw HTML.</li>
+        <li>Open DevTools Console — you should see <code>[learn/01] island online</code>.</li>
+        <li>Click “Pulse the box”. That’s GSAP on a client island.</li>
+        <li>Open <code>/learn/astro-mark.svg</code> directly in a new tab.</li>
+      </ol>
+    </div>
+    <div class="learn-callout learn-warn">
+      Rule of thumb: if it must work with JS disabled (SEO, first paint text) → template /
+      frontmatter. If it moves, listens, or talks to WebGL → <code>&lt;script&gt;</code>.
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn">← Hub</a>
+    <a href="/learn/02-props-slots">02 Props + slots →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  import { gsap } from "../../lib/gsap.js";
+
+  console.log("[learn/01] island online");
+
+  const msg = document.querySelector("[data-client-msg]");
+  if (msg) {
+    msg.textContent =
+      "Client island online — this text was written by JS after the page loaded.";
+  }
+
+  const box = document.querySelector("[data-s1-box]");
+  const btn = document.querySelector("[data-s1-pulse]");
+  btn?.addEventListener("click", () => {
+    if (!box) return;
+    gsap.fromTo(
+      box,
+      { scale: 1, rotate: 0 },
+      { scale: 1.15, rotate: 12, duration: 0.35, yoyo: true, repeat: 1, ease: "power2.out" }
+    );
+  });
+</script>

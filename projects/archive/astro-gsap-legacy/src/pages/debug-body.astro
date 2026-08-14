@@ -1,0 +1,50 @@
+---
+/** Isolated body-model debug — no GSAP / DOF / HDRI. */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>DEBUG · iron-man-body</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #1a1a1e;
+        overflow: hidden;
+        font-family: ui-monospace, monospace;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      #hud {
+        position: fixed;
+        left: 12px;
+        top: 12px;
+        color: #9fef9f;
+        font-size: 12px;
+        line-height: 1.5;
+        white-space: pre;
+        pointer-events: none;
+        text-shadow: 0 1px 4px #000;
+        z-index: 2;
+      }
+      #hud.err {
+        color: #ff6b6b;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hud">loading…</div>
+    <canvas id="c"></canvas>
+  </body>
+</html>
+
+<script>
+  import { initDebugBody } from "../lib/debugBody.js";
+  initDebugBody();
+</script>

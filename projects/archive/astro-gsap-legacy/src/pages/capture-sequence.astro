@@ -1,0 +1,102 @@
+---
+/**
+ * Assembly frame capture — Phase D
+ * /capture-sequence?id=f1-amr23
+ * /capture-sequence?id=f1-amr23&auto=1  → Playwright writes public/sequences/{id}/
+ */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Capture assembly sequence</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #07090c;
+        color: #eee;
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+      #hint {
+        margin: 0;
+        opacity: 0.7;
+        font-size: 0.85rem;
+      }
+      button {
+        padding: 0.55rem 0.9rem;
+        border: 0;
+        border-radius: 8px;
+        background: #7cffc4;
+        color: #061018;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: wait;
+      }
+      #stage {
+        display: grid;
+        place-items: center;
+        min-height: calc(100vh - 5rem);
+        padding: 1rem;
+      }
+      #c {
+        width: min(96vw, 1280px);
+        height: auto;
+        aspect-ratio: 16 / 9;
+        background: #0c1018;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      }
+      #log {
+        margin: 0;
+        padding: 0 1.25rem 1rem;
+        font-family: ui-monospace, monospace;
+        font-size: 0.78rem;
+        opacity: 0.75;
+        white-space: pre-wrap;
+        max-height: 8rem;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <h1>Assembly frame capture</h1>
+      <p id="hint">Loading…</p>
+      <button type="button" id="run" disabled>Capture sequence…</button>
+    </div>
+    <div id="stage">
+      <canvas id="c" width="1280" height="720"></canvas>
+    </div>
+    <p id="log"></p>
+
+    <script>
+      import { initCaptureSequence } from "../lib/captureSequenceClient.js";
+      initCaptureSequence().catch((err) => {
+        window.__CAPTURE_ERROR = String(err);
+        window.__CAPTURE_DONE = true;
+        const log = document.getElementById("log");
+        if (log) log.textContent = String(err);
+      });
+    </script>
+  </body>
+</html>

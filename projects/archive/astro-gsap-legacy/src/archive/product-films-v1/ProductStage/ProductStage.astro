@@ -1,0 +1,50 @@
+---
+interface Props {
+  theme: "iron-man" | "f1" | "watch";
+  modelSrc: string;
+  bg?: string;
+  assemblySequence?: string;
+}
+
+const { theme, modelSrc, bg = "#0a0a0b", assemblySequence } = Astro.props;
+---
+
+<div
+  class="product-experience"
+  data-product-stage
+  data-theme={theme}
+  data-model={modelSrc}
+  data-bg={bg}
+  data-assembly-sequence={assemblySequence}
+>
+  <div class="product-stage__canvas-wrap">
+    <canvas data-stage-canvas></canvas>
+    <canvas class="assembly-canvas" data-assembly-canvas aria-hidden="true"></canvas>
+    <div class="product-stage__vignette"></div>
+    <div class="product-stage__hotspots" data-hotspots aria-label="Model parts"></div>
+    <aside class="annotation-note" data-annotation-note hidden aria-live="polite">
+      <span class="annotation-note__index" data-note-index>01</span>
+      <h3 class="annotation-note__title" data-note-title></h3>
+      <p class="annotation-note__body" data-note-body></p>
+    </aside>
+    <nav class="annotation-strip" data-annotation-strip aria-label="Part tour" hidden></nav>
+    <div class="product-stage__hud">
+      <slot name="hud" />
+    </div>
+    <div class="dof-hud" data-dof-hud aria-hidden="true">
+      <span>FOCUS</span>
+      <div class="dof-hud__bar"><i data-dof-bar></i></div>
+      <span data-dof-label>deep</span>
+    </div>
+    <div class="product-stage__loading" data-stage-loading>Loading model</div>
+  </div>
+
+  <div class="product-copy">
+    <slot />
+  </div>
+</div>
+
+<script>
+  import { initProductStage } from "./ProductStage.js";
+  initProductStage();
+</script>

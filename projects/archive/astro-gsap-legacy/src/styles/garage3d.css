@@ -1,0 +1,534 @@
+/* Garage 3D film island — v1 HUD + Active Theory layers */
+
+.garage3d {
+  position: relative;
+  margin: 2rem auto 3rem;
+  max-width: 1200px;
+  padding: 0 clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.garage3d__head {
+  padding-top: 4rem;
+}
+
+.garage3d__kicker {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g3-accent, #7cffc4);
+  margin: 0 0 0.35rem;
+}
+
+.garage3d__title {
+  font-family: "Teko", "Bebas Neue", system-ui, sans-serif;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 0.95;
+  margin: 0 0 0.5rem;
+  color: #eef5f1;
+}
+
+.garage3d__lede {
+  max-width: 36rem;
+  margin: 0 0 1rem;
+  color: rgba(232, 245, 239, 0.62);
+  font-size: 0.98rem;
+}
+
+.garage3d__stage {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050708;
+  height: min(82vh, 720px);
+  min-height: 480px;
+  isolation: isolate;
+}
+
+.garage3d__stage.is-pinned {
+  z-index: 40;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.garage3d__stage::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 30% at 20% 30%, color-mix(in srgb, var(--g3-accent) 12%, transparent), transparent 70%),
+    radial-gradient(ellipse 35% 28% at 80% 70%, color-mix(in srgb, var(--g3-accent-2) 10%, transparent), transparent 70%);
+  animation: g3-glow 10s ease-in-out infinite alternate;
+  opacity: 0.7;
+}
+
+@keyframes g3-glow {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(2%, -3%) scale(1.05); }
+}
+
+.garage3d[data-theme="iron-man"] .garage3d__stage {
+  background: #080505;
+}
+
+.garage3d__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.garage3d__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, transparent 35%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 18%, transparent 75%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.garage3d__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.garage3d__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.08;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.04) 2px,
+    rgba(255, 255, 255, 0.04) 3px
+  );
+  animation: g3-scan 9s linear infinite;
+}
+
+@keyframes g3-scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(12px); }
+}
+
+.garage3d__swarm {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.garage3d__particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--g3-accent);
+  opacity: 0;
+  box-shadow: 0 0 8px var(--g3-accent);
+}
+
+.garage3d__scroll-rail {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 6;
+  width: 3px;
+  height: 72px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.garage3d__scroll-rail span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--g3-accent);
+  transform-origin: top center;
+  transform: scaleY(0.08);
+}
+
+.garage3d__hud {
+  position: absolute;
+  z-index: 6;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(6, 8, 12, 0.62);
+  backdrop-filter: blur(10px);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: rgba(238, 245, 241, 0.85);
+  pointer-events: none;
+}
+
+.garage3d__hud--tr {
+  top: 1rem;
+  right: 1rem;
+  text-align: right;
+}
+
+.garage3d__hud--br {
+  right: 1rem;
+  bottom: 5.2rem;
+}
+
+.garage3d__hud strong {
+  display: block;
+  color: var(--g3-accent);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.garage3d__mini {
+  display: grid;
+  gap: 0.15rem;
+  opacity: 0.85;
+}
+
+.garage3d__schematic {
+  position: absolute;
+  top: 4.5rem;
+  right: 1rem;
+  z-index: 6;
+  width: min(9.5rem, 28vw);
+  padding: 0.55rem 0.65rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(6, 8, 12, 0.55);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.garage3d__schematic-label {
+  margin: 0 0 0.4rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--g3-accent);
+}
+
+.garage3d__schematic-frame {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--g3-accent) 18%, transparent), transparent 70%),
+    rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.garage3d__schematic-frame img {
+  width: 68%;
+  height: 68%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--g3-accent) 35%, transparent));
+}
+
+/* Keep the subject clear on tight camera beats */
+.garage3d.is-tight .garage3d__card {
+  left: 0.75rem;
+  top: auto;
+  bottom: 5.4rem;
+  transform: none;
+  width: min(14.5rem, 46vw);
+  padding: 0.7rem 0.8rem;
+}
+
+.garage3d.is-tight .garage3d__card h3 {
+  font-size: 1.35rem;
+}
+
+.garage3d.is-tight .garage3d__hud--br {
+  display: none;
+}
+
+.garage3d__hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.garage3d__hotspot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.25s, background 0.2s, box-shadow 0.2s, scale 0.2s;
+}
+
+.garage3d__hotspot.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  scale: 1.12;
+  background: var(--g3-accent-2);
+  border-color: #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--g3-accent-2) 35%, transparent);
+}
+
+.garage3d__hotspot span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+}
+
+.garage3d__hotspot small {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.garage3d__hotspot.is-active small {
+  opacity: 1;
+}
+
+.garage3d__card {
+  position: absolute;
+  left: 1.15rem;
+  top: 50%;
+  transform: translateY(-55%);
+  z-index: 6;
+  width: min(18rem, 42vw);
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(6, 8, 12, 0.55);
+  backdrop-filter: blur(14px);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.garage3d__card-kicker {
+  margin: 0 0 0.35rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g3-accent);
+}
+
+.garage3d__card h3 {
+  margin: 0 0 0.4rem;
+  font-family: "Teko", "Bebas Neue", system-ui, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.garage3d__card p {
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: rgba(238, 245, 241, 0.72);
+}
+
+.garage3d__card-stats {
+  display: grid;
+  gap: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.65rem;
+}
+
+.garage3d__card-stats div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: rgba(238, 245, 241, 0.55);
+}
+
+.garage3d__card-stats div span:last-child {
+  color: var(--g3-accent);
+}
+
+.garage3d__note {
+  position: absolute;
+  right: 1.15rem;
+  bottom: 5.2rem;
+  z-index: 6;
+  width: min(15rem, 40vw);
+  padding: 0.8rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(6, 8, 12, 0.72);
+  backdrop-filter: blur(14px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.garage3d__dof {
+  position: absolute;
+  left: 1.15rem;
+  bottom: 1.35rem;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+.garage3d__dof-bar {
+  width: 72px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.garage3d__dof-bar i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--g3-accent-2);
+  transform-origin: left center;
+  transform: scaleX(0.2);
+}
+
+.garage3d__strip {
+  position: absolute;
+  left: 50%;
+  bottom: 1.15rem;
+  z-index: 7;
+  display: flex;
+  gap: 0.3rem;
+  max-width: min(92vw, 44rem);
+  padding: 0.3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(8, 10, 14, 0.65);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.garage3d__strip::-webkit-scrollbar {
+  display: none;
+}
+
+.garage3d__strip-btn {
+  display: grid;
+  gap: 0.05rem;
+  flex: 0 0 auto;
+  min-width: 3.4rem;
+  max-width: 5.2rem;
+  padding: 0.32rem 0.42rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(238, 245, 241, 0.7);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.garage3d__strip-btn span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+
+.garage3d__strip-btn small {
+  font-size: 0.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.garage3d__strip-btn:hover,
+.garage3d__strip-btn.is-active {
+  background: color-mix(in srgb, var(--g3-accent-2) 28%, transparent);
+  border-color: color-mix(in srgb, var(--g3-accent-2) 45%, transparent);
+  color: #fff;
+}
+
+.garage3d__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 8;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(5, 7, 8, 0.55);
+  pointer-events: none;
+  transition: opacity 0.45s;
+}
+
+.garage3d__loading.is-done {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .garage3d__stage {
+    height: min(78vh, 620px);
+  }
+
+  .garage3d__card {
+    top: auto;
+    bottom: 5.6rem;
+    transform: none;
+    width: min(16rem, 78vw);
+  }
+
+  .garage3d__note,
+  .garage3d__hud--br,
+  .garage3d__schematic {
+    display: none;
+  }
+
+  .garage3d__dof {
+    display: none;
+  }
+}

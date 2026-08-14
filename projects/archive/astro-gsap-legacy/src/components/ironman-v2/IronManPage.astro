@@ -1,0 +1,22 @@
+---
+import Hero from "./sections/Hero.astro";
+import Assembly from "./sections/Assembly.astro";
+import Systems from "./sections/Systems.astro";
+import PowerCore from "./sections/PowerCore.astro";
+import Flight from "./sections/Flight.astro";
+import Close from "./sections/Close.astro";
+---
+
+<main data-im-v2>
+  <Hero />
+  <Assembly />
+  <Systems />
+  <PowerCore />
+  <Flight />
+  <Close />
+</main>
+
+<script>
+  import { initIronManV2 } from "./initIronManV2.js";
+  initIronManV2();
+</script>

@@ -1,0 +1,183 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+---
+
+<LearnLayout title="05 · Landing set piece" session="05">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 05 · Competition craft</p>
+    <h1>One viewport. Three GSAP punches.</h1>
+    <p>
+      ScrambleText for “systems coming online,” MorphSVG for a logo/mark that transforms,
+      ScrollTrigger for a scrubbed progress beat. This is the toolkit gap from your lab →
+      CodeTV entry — no React, no Remotion.
+    </p>
+  </header>
+
+  <!-- SET PIECE: hero -->
+  <section class="s5-hero learn-demo" style="margin-top:0">
+    <div>
+      <p class="learn-eyebrow" style="justify-self:center">Boot sequence</p>
+      <h1>LAND THE PAGE</h1>
+      <p class="s5-scramble" data-scramble>initializing gsap uplink…</p>
+      <div class="learn-btn-row" style="justify-content:center">
+        <button type="button" class="learn-btn learn-btn--solid" data-scramble-rerun>Replay scramble</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>1. ScrambleText</h2>
+    <div class="learn-code">{`gsap.to(el, {
+  duration: 1.2,
+  scrambleText: { text: "uplink locked · scroll to assemble", chars: "▪▫▸▹·+*" },
+});`}</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>2. MorphSVG</h2>
+    <p>Same <code>&lt;path&gt;</code> element; the <code>d</code> attribute morphs between shapes.</p>
+    <div class="learn-demo s5-morph-wrap">
+      <div class="learn-demo__label">Click morph</div>
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path
+          data-morph-path
+          d="M50 12 L86 88 H14 Z"
+          fill="none"
+          stroke="#3dd6c6"
+          stroke-width="4"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-morph-btn>Morph shape</button>
+      </div>
+    </div>
+    <div class="learn-code">{`gsap.to(path, {
+  morphSVG: "M20 50 Q50 10 80 50 Q50 90 20 50 Z", // circle-ish blob
+  duration: 0.8,
+  ease: "power2.inOut",
+});`}</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>3. ScrollTrigger scrub</h2>
+    <p>Scroll the tall track — the bar scales with scroll progress (pinned).</p>
+  </section>
+
+  <div class="s5-scroll-track">
+    <div class="s5-pin" data-s5-pin>
+      <div class="s5-bar" data-s5-bar></div>
+      <p data-s5-label>scroll progress 0%</p>
+    </div>
+  </div>
+
+  <section class="learn-section">
+    <h2>How this maps to the hackathon</h2>
+    <div class="learn-callout">
+      Your 3D films are the deep cut. A first viewport that scrambles a line, morphs a mark,
+      then invites scroll — that’s the “wow in 3 seconds” layer judges feel before WebGL
+      finishes loading. Combine: Astro shell (01–03) + Flip UI (04) + this set piece (05) +
+      your ProductStage.
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>Replay scramble — change the final <code>text</code> string in the script.</li>
+        <li>Morph a few times — note it toggles between triangle and blob.</li>
+        <li>Scroll the pin section slowly; watch the label hit 100%.</li>
+        <li>Bonus: import <code>SplitText</code> and stagger the <code>LAND THE PAGE</code> chars on load.</li>
+      </ol>
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/04-gsap-flip">← 04</a>
+    <a href="/learn/06-explore">06 Explore →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  import { gsap, ScrambleTextPlugin, MorphSVGPlugin, ScrollTrigger, SplitText } from "../../lib/gsap.js";
+
+  void ScrambleTextPlugin;
+  void MorphSVGPlugin;
+  void ScrollTrigger;
+  void SplitText;
+
+  const scrambleEl = document.querySelector("[data-scramble]");
+  const finalLine = "uplink locked · scroll to assemble";
+
+  function runScramble() {
+    if (!scrambleEl) return;
+    gsap.to(scrambleEl, {
+      duration: 1.25,
+      scrambleText: {
+        text: finalLine,
+        chars: "▪▫▸▹·+*#",
+        speed: 0.4,
+      },
+      ease: "none",
+    });
+  }
+
+  runScramble();
+  document.querySelector("[data-scramble-rerun]")?.addEventListener("click", runScramble);
+
+  // Headline entrance with SplitText
+  const h1 = document.querySelector(".s5-hero h1");
+  if (h1) {
+    const split = SplitText.create(h1, { type: "chars" });
+    gsap.from(split.chars, {
+      y: 40,
+      opacity: 0,
+      duration: 0.55,
+      stagger: 0.03,
+      ease: "power3.out",
+      delay: 0.1,
+    });
+  }
+
+  const path = document.querySelector("[data-morph-path]");
+  const shapes = [
+    "M50 12 L86 88 H14 Z",
+    "M20 50 Q50 12 80 50 Q50 88 20 50 Z",
+    "M18 28 H82 V72 H18 Z",
+    "M50 15 L75 35 L65 85 L35 85 L25 35 Z",
+  ];
+  let shapeIndex = 0;
+  document.querySelector("[data-morph-btn]")?.addEventListener("click", () => {
+    if (!path) return;
+    shapeIndex = (shapeIndex + 1) % shapes.length;
+    gsap.to(path, {
+      morphSVG: shapes[shapeIndex],
+      duration: 0.75,
+      ease: "power2.inOut",
+    });
+  });
+
+  const bar = document.querySelector("[data-s5-bar]");
+  const label = document.querySelector("[data-s5-label]");
+  const pin = document.querySelector("[data-s5-pin]");
+  if (bar && pin) {
+    gsap.fromTo(
+      bar,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: pin.parentElement,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+          onUpdate(self) {
+            if (label) label.textContent = `scroll progress ${Math.round(self.progress * 100)}%`;
+          },
+        },
+      }
+    );
+  }
+</script>

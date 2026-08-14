@@ -1,0 +1,31 @@
+---
+/**
+ * Horizontal telemetry ticker between story beats.
+ */
+interface Props {
+  accent?: string;
+  items?: string[];
+}
+
+const {
+  accent = "#7cffc4",
+  items = [
+    "SECTOR 1 LOCKED",
+    "DRS AVAILABLE",
+    "ERS DEPLOY",
+    "TYRE WINDOW OPEN",
+    "PIT CONFIRM",
+    "DELTA -0.184",
+  ],
+} = Astro.props;
+
+const loop = [...items, ...items];
+---
+
+<div class="beat-ticker" style={`--ticker-accent:${accent}`} aria-hidden="true">
+  <div class="beat-ticker__track">
+    {loop.map((item) => (
+      <span><em>■</em> {item}</span>
+    ))}
+  </div>
+</div>

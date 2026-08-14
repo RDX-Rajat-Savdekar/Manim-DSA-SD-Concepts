@@ -1,0 +1,402 @@
+/* F1 v2 — SVG/GSAP landing */
+
+:root {
+  --f1-bg: #050a08;
+  --f1-surface: #0c1612;
+  --f1-border: #1a2e26;
+  --f1-text: #e8f5ef;
+  --f1-muted: #7a9a8c;
+  --f1-green: #7cffc4;
+  --f1-pink: #ff2d55;
+  --f1-lime: #c8ff4a;
+  --f1-display: "Teko", system-ui, sans-serif;
+  --f1-sans: "DM Sans", system-ui, sans-serif;
+  --f1-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.f1v2-body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%, #0d2a20 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 100% 20%, #2a0a14 0%, transparent 40%),
+    var(--f1-bg);
+  color: var(--f1-text);
+  font-family: var(--f1-sans);
+  line-height: 1.5;
+}
+
+.f1v2-page {
+  overflow-x: clip;
+}
+
+.f1v2-section {
+  position: relative;
+  padding: clamp(3rem, 8vh, 5rem) clamp(1rem, 4vw, 2.5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.f1v2-kicker {
+  font-family: var(--f1-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--f1-green);
+  margin: 0 0 0.5rem;
+}
+
+.f1v2-title {
+  font-family: var(--f1-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.f1v2-lede {
+  max-width: 34rem;
+  color: var(--f1-muted);
+  font-size: 1.05rem;
+  margin: 0 0 1.5rem;
+}
+
+.f1v2-btn {
+  appearance: none;
+  border: 1px solid var(--f1-green);
+  background: transparent;
+  color: var(--f1-green);
+  font-family: var(--f1-mono);
+  font-size: 0.78rem;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.f1v2-btn:hover {
+  background: color-mix(in srgb, var(--f1-green) 16%, transparent);
+}
+
+.f1v2-btn--solid {
+  background: var(--f1-green);
+  color: #04140e;
+  font-weight: 600;
+}
+
+/* Hero */
+.f1v2-hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+.f1v2-hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.f1v2-scramble {
+  font-family: var(--f1-mono);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: var(--f1-green);
+  min-height: 1.4em;
+  margin: 0 0 1.25rem;
+}
+
+.f1v2-mark {
+  width: min(120px, 28vw);
+  margin: 0 auto 1.5rem;
+  overflow: visible;
+}
+
+.f1v2-mark path {
+  fill: none;
+  stroke: var(--f1-green);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+/* Grid lights */
+.f1v2-grid {
+  text-align: center;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+}
+
+.f1v2-lights {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.f1v2-light {
+  width: clamp(36px, 8vw, 56px);
+  height: clamp(36px, 8vw, 56px);
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  box-shadow: inset 0 0 12px #000;
+}
+
+.f1v2-light.is-on {
+  background: #ff2d2d;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 24px #ff2d55aa, inset 0 0 8px #ffaaaa;
+}
+
+.f1v2-go {
+  font-family: var(--f1-display);
+  font-size: clamp(3rem, 12vw, 6rem);
+  color: var(--f1-lime);
+  opacity: 0;
+  letter-spacing: 0.08em;
+}
+
+/* Racetrack */
+.f1v2-track-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+.f1v2-track-sticky {
+  position: relative;
+  background: var(--f1-surface);
+  border: 1px solid var(--f1-border);
+  border-radius: 16px;
+  padding: 1rem;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.f1v2-track-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.f1v2-speed {
+  font-family: var(--f1-display);
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--f1-green);
+}
+
+.f1v2-speed span {
+  font-family: var(--f1-mono);
+  font-size: 0.75rem;
+  color: var(--f1-muted);
+  margin-left: 0.35rem;
+}
+
+.f1v2-slider-label {
+  font-family: var(--f1-mono);
+  font-size: 0.68rem;
+  color: var(--f1-muted);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.f1v2-slider {
+  width: min(220px, 50vw);
+  accent-color: var(--f1-pink);
+}
+
+.f1v2-track-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 58vh;
+}
+
+.f1v2-track-path {
+  fill: none;
+  stroke: #243830;
+  stroke-width: 18;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.f1v2-racing-line {
+  fill: none;
+  stroke: var(--f1-green);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.f1v2-stands {
+  fill: #15221c;
+  opacity: 0.9;
+}
+
+.f1v2-car {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.f1v2-minimap {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 88px;
+  height: 88px;
+  border-radius: 10px;
+  border: 1px solid var(--f1-border);
+  background: #08120e;
+  padding: 6px;
+}
+
+.f1v2-minimap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.f1v2-track-spacer {
+  display: none;
+}
+
+/* Aero */
+.f1v2-aero-svg {
+  width: 100%;
+  max-width: 520px;
+  overflow: visible;
+  margin: 1.5rem 0;
+}
+
+.f1v2-aero-grid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .f1v2-aero-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Garage Flip */
+.f1v2-garage-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1.25rem 0;
+}
+
+.f1v2-chip {
+  appearance: none;
+  border: 1px solid var(--f1-border);
+  background: #0a1410;
+  color: var(--f1-text);
+  font-family: var(--f1-mono);
+  font-size: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.f1v2-chip.is-feature {
+  width: 100%;
+  min-height: 120px;
+  text-align: left;
+  border-color: var(--f1-green);
+  background: linear-gradient(145deg, #0f2420, #0a1410);
+  font-size: 0.95rem;
+  padding: 1.1rem 1.25rem;
+}
+
+.f1v2-chip strong {
+  display: block;
+  font-family: var(--f1-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--f1-green);
+  margin-bottom: 0.25rem;
+}
+
+.f1v2-chip.is-feature strong {
+  font-size: 1.8rem;
+}
+
+/* Telemetry */
+.f1v2-tele-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin: 1.5rem 0;
+}
+
+.f1v2-tele-card {
+  background: var(--f1-surface);
+  border: 1px solid var(--f1-border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.f1v2-tele-card__n {
+  font-family: var(--f1-display);
+  font-size: 2.2rem;
+  color: var(--f1-green);
+  line-height: 1;
+}
+
+.f1v2-tele-card__l {
+  font-family: var(--f1-mono);
+  font-size: 0.68rem;
+  color: var(--f1-muted);
+  margin-top: 0.35rem;
+}
+
+.f1v2-ers {
+  height: 10px;
+  background: #15221c;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+}
+
+.f1v2-ers__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--f1-green), var(--f1-lime));
+  border-radius: inherit;
+  transform-origin: left;
+}
+
+.f1v2-pit {
+  font-family: var(--f1-mono);
+  font-size: 0.9rem;
+  color: var(--f1-pink);
+  min-height: 1.4em;
+}
+
+/* Close */
+.f1v2-close {
+  text-align: center;
+  padding-bottom: 6rem;
+}
+
+.f1v2-close__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.f1v2-close__links a {
+  color: var(--f1-muted);
+  font-family: var(--f1-mono);
+  font-size: 0.78rem;
+}

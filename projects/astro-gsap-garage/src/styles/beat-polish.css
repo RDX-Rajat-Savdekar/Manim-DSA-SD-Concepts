@@ -1,0 +1,160 @@
+/* Shared Active Theory–inspired atmosphere for 2D story beats */
+
+.beat-atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+
+.beat-atmosphere::before,
+.beat-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.beat-atmosphere::before {
+  opacity: 0.55;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 40%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.beat-atmosphere::after {
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.beat-atmosphere > * {
+  position: relative;
+  z-index: 1;
+}
+
+.beat-scan {
+  position: relative;
+}
+
+.beat-scan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 2px,
+    rgba(255, 255, 255, 0.05) 3px
+  );
+  animation: beat-scan-drift 10s linear infinite;
+}
+
+@keyframes beat-scan-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(10px); }
+}
+
+.beat-ticker {
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.55rem 0;
+  margin: 0;
+}
+
+.beat-ticker__track {
+  display: flex;
+  width: max-content;
+  gap: 2.5rem;
+  animation: beat-ticker-run 28s linear infinite;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+}
+
+.beat-ticker__track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.beat-ticker__track em {
+  font-style: normal;
+  color: var(--ticker-accent, #7cffc4);
+}
+
+@keyframes beat-ticker-run {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.beat-schematic-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+}
+
+.beat-schematic {
+  width: 64px;
+  height: 64px;
+  padding: 0.55rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--schematic-glow, #7cffc4) 35%, transparent));
+}
+
+.beat-schematic.is-draw {
+  opacity: 0.85;
+}
+
+.beat-seq {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050608;
+  aspect-ratio: 16 / 9;
+  margin-top: 1.5rem;
+}
+
+.beat-seq canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.beat-seq__meta {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+}
+
+[data-kinetic] .char,
+[data-kinetic] .word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+#smooth-wrapper {
+  overflow: hidden;
+}
+
+#smooth-content {
+  overflow: visible;
+}

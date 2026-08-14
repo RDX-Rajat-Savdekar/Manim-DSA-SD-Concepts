@@ -1,0 +1,33 @@
+---
+import "../../styles/global.css";
+import "../../styles/product.css";
+import SiteNav from "../../components/SiteNav/SiteNav.astro";
+import IronManFilm from "../../archive/product-films-v1/IronMan/IronManFilm.astro";
+import { models } from "../../lib/models.js";
+
+const m = models.ironMan;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{m.product} — v1 archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="product-page" data-theme="iron-man">
+      <SiteNav current="iron-man" />
+      <p style="position:fixed;top:4.5rem;left:1rem;z-index:40;font:500 0.7rem/1.2 'IBM Plex Mono',monospace;color:#f5b301;background:#120808cc;padding:0.4rem 0.65rem;border-radius:6px">
+        v1 archive · <a href="/iron-man" style="color:#fff">open Mark 85 v2 →</a>
+      </p>
+      <IronManFilm model={m} navCurrent="iron-man" />
+    </div>
+  </body>
+</html>

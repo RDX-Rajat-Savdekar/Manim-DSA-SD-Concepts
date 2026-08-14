@@ -1,0 +1,64 @@
+---
+const parts = [
+  {
+    id: "wing",
+    beat: 1,
+    label: "Front wing",
+    title: "Air starts here",
+    body: "Every vane is a decision about downforce vs drag.",
+  },
+  {
+    id: "floor",
+    beat: 5,
+    label: "Floor",
+    title: "Ground effect",
+    body: "The real wing is under the car.",
+  },
+  {
+    id: "drs",
+    beat: 6,
+    label: "Rear wing",
+    title: "DRS plane",
+    body: "Drag when you need it. Open when you don't.",
+  },
+  {
+    id: "pu",
+    beat: 7,
+    label: "Power unit",
+    title: "Hybrid heart",
+    body: "ICE + ERS in a packaging puzzle.",
+  },
+  {
+    id: "halo",
+    beat: 4,
+    label: "Halo",
+    title: "Cockpit shield",
+    body: "Titanium arch. Driver first.",
+  },
+];
+---
+
+<section class="f1v2-section" id="garage" data-f1-garage>
+  <p class="f1v2-kicker">Parts board</p>
+  <h2 class="f1v2-title" style="font-size:clamp(2rem,6vw,3.5rem)">Jump into the garage</h2>
+  <p class="f1v2-lede">
+    Flip a chip to expand it — then it scrolls you into the matching 3D camera beat below.
+  </p>
+  <div class="f1v2-garage-strip" data-f1-garage-strip>
+    {
+      parts.map((p, i) => (
+        <button
+          type="button"
+          class:list={["f1v2-chip", i === 0 && "is-feature"]}
+          data-f1-chip
+          data-beat={String(p.beat)}
+          data-title={p.title}
+          data-body={p.body}
+        >
+          <strong>{p.label}</strong>
+          <span data-f1-chip-body>{i === 0 ? p.body : p.title}</span>
+        </button>
+      ))
+    }
+  </div>
+</section>

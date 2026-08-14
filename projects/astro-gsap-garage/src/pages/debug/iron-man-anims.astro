@@ -1,0 +1,242 @@
+---
+import "../../styles/global.css";
+import SiteNav from "../../components/SiteNav/SiteNav.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Debug — Iron Man clips + camera</title>
+    <meta name="description" content="Mixamo clip lab and per-beat camera tuner for Mark 85." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body class="anim-debug">
+    <SiteNav current="iron-man" />
+
+    <div class="anim-debug__stage">
+      <canvas data-anim-debug-canvas></canvas>
+
+      <aside class="anim-debug__panel">
+        <p class="anim-debug__kicker">Debug lab</p>
+        <h1 class="anim-debug__title">Clips + camera</h1>
+        <p class="anim-debug__lede">
+          Pick a beat to load its clip/FX, then tune the camera. Copy the look arrays into
+          <code>src/lib/annotations/iron-man.ts</code> when you like a framing.
+        </p>
+        <p class="anim-debug__status" data-anim-debug-status>Loading model…</p>
+
+        <p class="anim-debug__section">Clips</p>
+        <div class="anim-debug__row" data-anim-debug-clips></div>
+
+        <p class="anim-debug__section">Beats (fx + camera)</p>
+        <div class="anim-debug__row" data-anim-debug-beats></div>
+
+        <p class="anim-debug__section">Camera (active beat)</p>
+        <div class="anim-debug__cam" data-anim-debug-cam></div>
+        <div class="anim-debug__cam-actions">
+          <button type="button" data-anim-debug-reset>Reset beat</button>
+          <button type="button" data-anim-debug-copy>Copy looks</button>
+        </div>
+        <textarea class="anim-debug__export" data-anim-debug-export rows="8" readonly></textarea>
+
+        <p class="anim-debug__note">
+          Live page: <a href="/iron-man">/iron-man</a>
+        </p>
+      </aside>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  .anim-debug {
+    margin: 0;
+    min-height: 100vh;
+    background: #070809;
+    color: #f2f2f0;
+    font-family: "DM Sans", system-ui, sans-serif;
+  }
+
+  .anim-debug__stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .anim-debug__stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .anim-debug__panel {
+    position: absolute;
+    top: 4.5rem;
+    left: 1rem;
+    z-index: 5;
+    width: min(24rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 5.5rem);
+    overflow: auto;
+    padding: 1rem 1.1rem 1.15rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(8, 10, 12, 0.82);
+    backdrop-filter: blur(10px);
+  }
+
+  .anim-debug__kicker {
+    margin: 0;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f5b301;
+  }
+
+  .anim-debug__title {
+    margin: 0.35rem 0 0.25rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .anim-debug__lede,
+  .anim-debug__status,
+  .anim-debug__note {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .anim-debug__lede code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: #f5b301;
+  }
+
+  .anim-debug__status {
+    margin-top: 0.75rem;
+    padding: 0.45rem 0.55rem;
+    border-left: 2px solid #f5b301;
+    background: rgba(245, 179, 1, 0.08);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: #f5b301;
+  }
+
+  .anim-debug__section {
+    margin: 1rem 0 0.45rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .anim-debug__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .anim-debug__row button,
+  .anim-debug__cam-actions button {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.82);
+    padding: 0.35rem 0.55rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+
+  .anim-debug__row button:hover,
+  .anim-debug__cam-actions button:hover {
+    border-color: rgba(245, 179, 1, 0.55);
+    color: #fff;
+  }
+
+  .anim-debug__row button.is-active {
+    background: #f5b301;
+    border-color: #f5b301;
+    color: #111;
+    font-weight: 600;
+  }
+
+  .anim-debug__cam {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .anim-debug__slider {
+    display: grid;
+    grid-template-columns: 5.5rem 2.6rem 1fr;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .anim-debug__slider-val {
+    text-align: right;
+    color: #f5b301;
+  }
+
+  .anim-debug__slider input[type="range"] {
+    width: 100%;
+    accent-color: #f5b301;
+  }
+
+  .anim-debug__cam-actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.65rem;
+  }
+
+  .anim-debug__export {
+    width: 100%;
+    margin-top: 0.55rem;
+    box-sizing: border-box;
+    resize: vertical;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.78);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.62rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+  }
+
+  .anim-debug__note {
+    margin-top: 1rem;
+  }
+
+  .anim-debug__note a {
+    color: #f5b301;
+  }
+
+  @media (max-width: 720px) {
+    .anim-debug__panel {
+      top: auto;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-height: 48vh;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  import { initIronManAnimDebug } from "../../components/ironman-debug/initIronManAnimDebug";
+  initIronManAnimDebug();
+</script>

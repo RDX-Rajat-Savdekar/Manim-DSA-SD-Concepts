@@ -1,0 +1,27 @@
+{
+  "name": "astro-gsap-fresh",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "mixamo:pack": "/Applications/Blender.app/Contents/MacOS/Blender --background --python scripts/pack-mixamo-anims.py -- public/models/mixamo-anims.glb public/models/_src/mixamo",
+    "mixamo:character": "/Applications/Blender.app/Contents/MacOS/Blender --background --python scripts/pack-mixamo-character.py -- public/models/iron-man-rigged.glb public/models/mixamo-anims.glb skin_fbx public/models/_src/mixamo"
+  },
+  "dependencies": {
+    "astro": "^6.3.1",
+    "gsap": "^3.15.0",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0",
+    "vitest": "^3.2.4"
+  }
+}

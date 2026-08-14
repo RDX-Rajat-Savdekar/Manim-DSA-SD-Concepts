@@ -1,0 +1,146 @@
+---
+import "../styles/global.css";
+import "../styles/product.css";
+import SiteNav from "../components/SiteNav/SiteNav.astro";
+import ProductStage from "../archive/product-films-v1/ProductStage/ProductStage.astro";
+import { models } from "../lib/models.js";
+
+const m = models.watch;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{m.product} — Chronograph</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="product-page" data-theme="watch">
+      <SiteNav current="watch" />
+      <ProductStage theme="watch" modelSrc={m.src} bg={m.bg}>
+        <div slot="hud">
+          <div class="scroll-rail" aria-hidden="true">
+            <span class="scroll-rail__fill" data-scroll-rail></span>
+          </div>
+          <div class="hud-panel hud-panel--tr">
+            <strong data-hud-scramble data-scramble="CHRONOGRAPH · RUNNING">CHRONOGRAPH · RUNNING</strong>
+            <span>Swiss sample · Khronos</span>
+          </div>
+          <span class="tick-beat" data-tick-beat aria-hidden="true"></span>
+          <svg class="watch-svg" data-draw viewBox="0 0 320 320" fill="none" aria-hidden="true">
+            <circle id="second-orbit" cx="160" cy="160" r="110" stroke="rgba(201,162,39,0.25)" stroke-width="1" />
+            <circle cx="160" cy="160" r="88" stroke="#c9a227" stroke-width="1.25" />
+            <g data-gear="a">
+              <circle cx="96" cy="210" r="28" stroke="#e8e0d0" stroke-width="1" />
+              <path d="M96 182 V238 M68 210 H124" stroke="#c9a227" stroke-width="1" />
+            </g>
+            <g data-gear="b">
+              <circle cx="150" cy="230" r="20" stroke="#e8e0d0" stroke-width="1" />
+            </g>
+            <line data-second-hand x1="160" y1="160" x2="160" y2="58" stroke="#c9a227" stroke-width="2" />
+          </svg>
+        </div>
+
+        <!-- Level camera: low elevation, focus near dial center -->
+        <section
+          class="feature-beat feature-beat--hero"
+          data-look="28,2,1.0,0.12,0.0,0,30"
+          data-spin="0.25"
+        >
+          <div class="feature-card">
+            <p class="feature-kicker" data-fade>Khronos · ChronographWatch</p>
+            <h1 class="product-title shimmer" data-split data-shimmer>Mechanical Watch</h1>
+            <p class="product-lede" data-fade>{m.tagline}</p>
+            <p class="product-attr">{m.attribution}</p>
+          </div>
+        </section>
+
+        <!-- Dial macro -->
+        <section class="feature-beat" id="movement" data-look="-12,5,0.26,0.02,0.04,0.08,18" data-spin="0">
+          <div class="feature-card">
+            <p class="feature-kicker">Dial</p>
+            <h2 data-split>Face of precision</h2>
+            <p data-fade>
+              Extreme macro on the dial — the AirPods “one feature” move. Hands, indices, and the
+              quiet geometry of time.
+            </p>
+            <div class="tick-row" aria-hidden="true">
+              {Array.from({ length: 24 }).map(() => <span data-tick />)}
+            </div>
+          </div>
+        </section>
+
+        <!-- Crown / case side -->
+        <section class="feature-beat" data-look="88,1,0.28,0.35,0.0,0.05,19" data-spin="0">
+          <div class="feature-card feature-card--right">
+            <p class="feature-kicker">Crown & case</p>
+            <h2 data-split>Machined quiet</h2>
+            <p data-fade>
+              Side light on the crown. Thickness and grip — the only controls you need.
+            </p>
+            <div class="feature-detail">
+              <div class="feature-detail__row">
+                <span>Case</span><span data-count="42" data-suffix=" mm">0</span>
+              </div>
+              <div class="feature-detail__row">
+                <span>Water</span><span data-count="100" data-suffix=" m">0</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Crystal / reflection -->
+        <section class="feature-beat" data-look="15,8,0.24,0.0,0.06,0.15,17" data-spin="0">
+          <div class="feature-card">
+            <p class="feature-kicker">Crystal</p>
+            <h2 data-split>Light, then silence</h2>
+            <p data-fade>
+              Tip into the sapphire. Reflections do the talking — no extra UI required.
+            </p>
+          </div>
+        </section>
+
+        <!-- Bracelet links -->
+        <section class="feature-beat" data-look="150,0,0.3,0.15,-0.2,0,20" data-spin="0">
+          <div class="feature-card feature-card--right">
+            <p class="feature-kicker">Bracelet</p>
+            <h2 data-split>Links of light</h2>
+            <p data-fade>
+              Follow the bracelet. Each link a polished plane — craft you feel before you read the
+              spec.
+            </p>
+            <div class="feature-detail">
+              <div class="feature-detail__row">
+                <span>Reserve</span><span data-count="72" data-suffix=" h">0</span>
+              </div>
+              <div class="feature-detail__row">
+                <span>Beat</span><span data-count="28" data-suffix="k bph">0</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-beat" data-look="200,3,1.05,0.1,0.0,0,32" data-spin="0.3">
+          <div class="feature-card">
+            <p class="feature-kicker">Full piece</p>
+            <h2 data-split>Time, held still</h2>
+            <p data-fade>Pull back. The chronograph rests in frame.</p>
+            <a class="product-cta" href="/iron-man">Compare the suit →</a>
+          </div>
+        </section>
+      </ProductStage>
+    </div>
+
+    <script>
+      import { initWatchFX } from "../components/Watch/Watch.js";
+      initWatchFX();
+    </script>
+  </body>
+</html>

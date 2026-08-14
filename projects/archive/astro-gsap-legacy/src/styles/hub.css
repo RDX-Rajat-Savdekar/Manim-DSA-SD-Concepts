@@ -1,0 +1,92 @@
+/* Hub landing page */
+
+.hub {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 4rem;
+}
+
+.hub__header {
+  margin-bottom: 3rem;
+}
+
+.hub__eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 234, 0.55);
+  margin: 0 0 0.5rem;
+}
+
+.hub__title {
+  font-family: "Syne", system-ui, sans-serif;
+  font-size: clamp(2.5rem, 7vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0 0 0.75rem;
+  background: linear-gradient(135deg, #f4f1ea, #7cffc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hub__lede {
+  max-width: 30rem;
+  margin: 0;
+  color: rgba(244, 241, 234, 0.62);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.hub-card {
+  display: block;
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.hub-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.hub-card__index {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7cffc4;
+}
+
+.hub-card__title {
+  margin: 0 0 0.5rem;
+  font-family: "Syne", system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.hub-card__meta {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: rgba(244, 241, 234, 0.65);
+}
+
+.hub-card__plugins {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(244, 241, 234, 0.4);
+}

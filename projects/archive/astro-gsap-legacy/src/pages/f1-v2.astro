@@ -1,0 +1,28 @@
+---
+import "../styles/global.css";
+import "../styles/f1-v2.css";
+import SiteNav from "../components/SiteNav/SiteNav.astro";
+import F1Page from "../components/f1-v2/F1Page.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>AMR23 — SVG-only v2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="f1v2-body">
+    <SiteNav current="f1" />
+    <p style="position:fixed;top:4.5rem;right:1rem;z-index:40;font:500 0.7rem/1.2 'IBM Plex Mono',monospace;color:#7cffc4;background:#0a1018cc;padding:0.4rem 0.65rem;border-radius:6px">
+      SVG v2 · <a href="/f1" style="color:#fff">open v3 hybrid →</a>
+    </p>
+    <F1Page />
+  </body>
+</html>

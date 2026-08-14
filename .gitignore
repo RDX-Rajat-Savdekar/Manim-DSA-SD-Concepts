@@ -9,12 +9,22 @@ wheels/
 # Virtual environments
 .venv
 
+# Secrets
+.env
+**/.env
+
 # macOS
 .DS_Store
 **/.DS_Store
 
-# Video — never commit renders, clips, or source footage (regenerate locally)
+# Node
+**/node_modules/
+
+# Video / audio — regenerate locally (never commit renders or VO)
 **/*.mp4
+**/*.mov
+**/*.wav
+**/*.mp3
 
 # ── Manim (all projects) ─────────────────────────────────────────────────────
 # Render cache + partial segments — never commit; re-run manim to regenerate.
@@ -36,13 +46,33 @@ projects/aura/design-video/aura_manim/media/audio/
 # ── Aura · 60s recruiter clip ────────────────────────────────────────────────
 projects/aura/manim/media/
 projects/aura/output/
-# MP3 beds only — commit README + *-license.txt (Pixabay proof for YouTube)
+# Pixabay proof text stays; audio beds ignored above via *.mp3
 projects/aura/music/*.mp3
 **/music/*.mp3
 
 # ── Channel intro (Sharingan bumper) ─────────────────────────────────────────
 projects/channel-intro/output/
 projects/channel-intro/media/
+
+# ── Interview shorts (Gemini TTS + Manim) ────────────────────────────────────
+projects/interview-shorts/output/
+projects/interview-shorts/shorts/*/output/
+projects/interview-shorts/shorts/*/media/
+# QA frames / render logs live under output/ (ignored)
+*.log
+
+# ── Large 3D / HDR / sequence assets (too big for git; keep locally) ─────────
+**/*.glb
+**/*.gltf
+**/*.fbx
+**/*.hdr
+**/*.exr
+# Frame sequences under public/sequences (legacy garage)
+**/public/sequences/
+**/sequences/**/*.webp
+
+# ── Godot editor cache ───────────────────────────────────────────────────────
+**/.godot/
 
 # ── Project notes / local-only sources (not for git) ───────────────────────────
 project-sources/

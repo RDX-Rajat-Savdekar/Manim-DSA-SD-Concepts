@@ -1,0 +1,47 @@
+---
+---
+
+<section class="imv2-section beat-atmosphere" id="flight" data-im-flight style="max-width:1100px">
+  <p class="imv2-kicker">Beat 04 · Flight path</p>
+  <h2 class="imv2-title" data-kinetic style="font-size:clamp(2.2rem,7vw,3.8rem)">Sky is the runway</h2>
+  <p class="imv2-lede">Scroll to climb. Altitude tape rises with the suit along the path.</p>
+  <div class="beat-schematic-row" style="--schematic-glow:#6a80ff">
+    <img class="beat-schematic" data-schematic-draw src="/schematics/iron-man/jet.svg" alt="" width="64" height="64" />
+    <img class="beat-schematic" data-schematic-draw src="/schematics/iron-man/boot.svg" alt="" width="64" height="64" />
+    <img class="beat-schematic" data-schematic-draw src="/schematics/iron-man/hand.svg" alt="" width="64" height="64" />
+  </div>
+
+  <div class="imv2-flight-sticky" data-im-flight-sticky>
+    <div style="display:flex;justify-content:space-between;font-family:var(--im-mono);font-size:0.75rem;color:var(--im-muted);margin-bottom:0.5rem">
+      <span>ALT <span data-im-alt>0</span> m</span>
+      <span>MACH <span data-im-mach>0.00</span></span>
+    </div>
+    <svg class="imv2-flight-svg" viewBox="0 0 800 360">
+      <path
+        data-im-skyline
+        d="M0 280 L80 280 L100 200 L140 200 L160 140 L200 140 L220 220 L280 220 L300 160 L360 160 L400 100 L460 100 L480 180 L560 180 L600 120 L680 120 L720 200 L800 200 L800 360 L0 360 Z"
+        fill="#1a1010"
+        stroke="#2a1818"
+      />
+      <path
+        data-im-flight-path
+        d="M60 300 C 160 280, 220 200, 300 180 S 480 120, 560 100 S 700 80, 760 60"
+        fill="none"
+        stroke="#3a2828"
+        stroke-width="3"
+        stroke-dasharray="6 6"
+      />
+      <path
+        data-im-flight-draw
+        d="M60 300 C 160 280, 220 200, 300 180 S 480 120, 560 100 S 700 80, 760 60"
+        fill="none"
+        stroke="#f5b301"
+        stroke-width="2"
+      />
+      <g data-im-suit>
+        <circle r="8" fill="#ff2a2a" />
+        <circle r="3" fill="#f5b301" />
+      </g>
+    </svg>
+  </div>
+</section>

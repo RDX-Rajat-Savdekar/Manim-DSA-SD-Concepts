@@ -1,0 +1,140 @@
+---
+interface Props {
+  theme?: "f1" | "iron-man";
+  modelSrc: string;
+  animSrc?: string;
+  kicker?: string;
+  title?: string;
+  lede?: string;
+  scramble?: string;
+}
+
+const {
+  theme = "f1",
+  modelSrc,
+  animSrc = "",
+  kicker = "Garage tour",
+  title = "The real machine",
+  lede = "Pinned 3D film — authored cameras, part HUD, strip tour. Scroll to scrub.",
+  scramble = theme === "f1" ? "AMR23 · GREEN" : "MARK 85 · ONLINE",
+} = Astro.props;
+
+const accent = theme === "f1" ? "#7cffc4" : "#f5b301";
+---
+
+<section
+  class="garage3d"
+  data-garage3d
+  data-theme={theme}
+  data-model={modelSrc}
+  data-anims={animSrc || undefined}
+  id="garage-3d"
+  style={`--g3-accent:${accent}; --g3-accent-2:${theme === "f1" ? "#ff2d55" : "#ff2a2a"}`}
+>
+  <div class="garage3d__head">
+    <p class="garage3d__kicker">{kicker}</p>
+    <h2 class="garage3d__title">{title}</h2>
+    <p class="garage3d__lede">{lede}</p>
+    {theme === "f1" && (
+      <div class="garage3d__car-selector" data-car-selector>
+        <button class="garage3d__car-btn is-active" data-model-path="/models/f1-amr23-parts.glb">AMR23 Parts</button>
+        <button class="garage3d__car-btn" data-model-path="/models/f1-amr23.glb">AMR23 Full</button>
+        <button class="garage3d__car-btn" data-model-path="/models/f1-c42.glb">Alfa Romeo C42</button>
+        <button class="garage3d__car-btn" data-model-path="/models/f1-w13.glb">Mercedes W13</button>
+      </div>
+    )}
+  </div>
+
+  <style>
+    .garage3d__car-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .garage3d__car-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .garage3d__car-btn:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+    .garage3d__car-btn.is-active {
+      background: var(--g3-accent, #7cffc4);
+      border-color: var(--g3-accent, #7cffc4);
+      color: #050708;
+      font-weight: 500;
+    }
+  </style>
+
+  <div class="garage3d__stage" data-garage3d-pin>
+    <canvas class="garage3d__canvas" data-garage3d-canvas></canvas>
+
+    <div class="garage3d__vignette" aria-hidden="true"></div>
+    <div class="garage3d__grain" aria-hidden="true"></div>
+    <div class="garage3d__scan" aria-hidden="true"></div>
+
+    <div class="garage3d__swarm" data-garage3d-swarm aria-hidden="true"></div>
+
+    <div class="garage3d__scroll-rail" aria-hidden="true">
+      <span data-garage3d-rail></span>
+    </div>
+
+    <div class="garage3d__hud garage3d__hud--tr" data-hud-live>
+      <strong data-garage3d-tele>{theme === "f1" ? "PIT WALL · LIVE" : "SUIT · SCAN"}</strong>
+      <span data-garage3d-scramble>{scramble}</span>
+    </div>
+    <div class="garage3d__hud garage3d__hud--br" data-hud-live>
+      <strong>{theme === "f1" ? "LAP DELTA" : "POWER CORE"}</strong>
+      <div class="garage3d__mini">
+        {theme === "f1" ? (
+          <>
+            <div><span data-garage3d-delta>-0.000</span> vs pole</div>
+            <div><span data-garage3d-ers>0</span>% ERS</div>
+          </>
+        ) : (
+          <>
+            <div><span data-garage3d-delta>0.000</span> GW</div>
+            <div><span data-garage3d-ers>0</span>% charge</div>
+          </>
+        )}
+      </div>
+    </div>
+
+    <aside class="garage3d__schematic" data-garage3d-schematic aria-hidden="true">
+      <p class="garage3d__schematic-label" data-garage3d-schematic-label>Part schematic</p>
+      <div class="garage3d__schematic-frame">
+        <img data-garage3d-schematic-img src="" alt="" width="128" height="128" />
+      </div>
+    </aside>
+
+    <div class="garage3d__hotspots" data-garage3d-hotspots aria-label="Model parts"></div>
+
+    <article class="garage3d__card" data-garage3d-card>
+      <p class="garage3d__card-kicker" data-garage3d-card-kicker>01 · Part</p>
+      <h3 data-garage3d-card-title>Loading</h3>
+      <p data-garage3d-card-body></p>
+      <div class="garage3d__card-stats" data-garage3d-card-stats></div>
+    </article>
+
+    <div class="garage3d__dof" aria-hidden="true">
+      <span>FOCUS</span>
+      <div class="garage3d__dof-bar"><i data-garage3d-dof></i></div>
+      <span data-garage3d-dof-label>deep</span>
+    </div>
+
+    <nav class="garage3d__strip" data-garage3d-strip aria-label="Part tour"></nav>
+
+    <div class="garage3d__loading" data-garage3d-loading>Loading model…</div>
+  </div>
+</section>

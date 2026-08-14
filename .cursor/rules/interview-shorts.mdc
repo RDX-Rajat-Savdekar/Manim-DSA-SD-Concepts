@@ -1,0 +1,25 @@
+---
+description: Interview shorts (IG/YT vertical Manim + Gemini TTS)
+globs:
+  - projects/interview-shorts/**
+alwaysApply: false
+---
+
+# Interview shorts — agent rules
+
+Read first: `docs/video-production/MANIM-AGENT-LESSONS.md` (safe zone, fonts, render recipe).
+
+## Hard gates
+
+1. **VO-first:** `script.txt` → Gemini TTS (**Puck**) → `ffprobe` duration → animate to audio → mux. No 4K until VO exists.
+2. **Safe zone:** All readable content inside `safe_zone.safe_bounds()` (top 12% / bottom 24% / right 18% / left 6%).
+3. **Render only via** `projects/interview-shorts/tools/render_short.sh` (preview | final | ig).
+4. **QA yourself:** extract mid + late frames → `qa_safe_overlay.py` → inspect PNGs. Do not ask the user to spot UI overlap.
+5. **Fonts:** `DejaVu Sans` only. Never width-fit labels to braces. Clear `media/texts/` after font changes.
+6. **Ship:** mux with `tools/mux_vo.py` (freeze-pad), copy final to `posted/` when ready.
+
+## Brand
+
+- Host voice: **Puck** (`voice/LIKED_VOICES.md`)
+- Font floors: title ≥30, body ≥20, tags ≥18 (`safe_zone.MIN_*`)
+- One concept + one punchline per short

@@ -1,0 +1,24 @@
+---
+import "../styles/global.css";
+import "../styles/ironman-v2.css";
+import "../styles/garage3d.css";
+import SiteNav from "../components/SiteNav/SiteNav.astro";
+import IronManPage from "../components/ironman-v3/IronManPage.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Mark 85 — Suit assembly and 3D stage</title>
+    <meta name="description" content="Iron Man Mark 85 — GSAP suit assembly canvas player, systems diagnostic, power core, and flight path." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body class="imv2-body">
+    <SiteNav current="iron-man" />
+    <IronManPage />
+  </body>
+</html>

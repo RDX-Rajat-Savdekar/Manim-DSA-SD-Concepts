@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Astro
+dist/
+.astro/
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large binary assets (restore locally — see public/models/README.md)
+*.glb
+*.hdr
+*.fbx
+*.FBX
+
+# Local Mixamo / skin downloads (binary; keep README.md tracked under _src)
+skin_fbx/
+fbx/
+public/models/_src/**/*.glb
+public/models/_src/**/*.fbx
+public/hdri/*.hdr
+
+# Editor / tooling
+.vscode/
+.idea/
+*.swp
+*.swo
+.claude/
+.cursor/
+
+# Logs & caches
+*.log
+npm-debug.log*
+.cache/
+coverage/
+
+# Sequences (large, generated)
+public/sequences/*/*.webp

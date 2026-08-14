@@ -1,0 +1,11 @@
+[curious] Why does a request feel slow?
+
+At first it looks simple: network latency out, network latency back.
+
+[short pause]
+Expand the middle.
+First: queueing delay — waiting before work starts.
+Then service time — the actual processing.
+
+[short pause]
+Add both network latencies plus everything in between, and you get response time — almost always bigger than service time alone.

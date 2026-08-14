@@ -1,0 +1,11 @@
+[curious] Response time isn’t one number — it’s a distribution.
+
+Most requests are fine. A few are slow.
+
+[short pause]
+The median — p50 — is the typical wait.
+The mean gets pulled up by outliers — so it’s not “typical.”
+
+p95 and p99 show the slow tail users actually feel.
+
+[serious] Percentiles for user experience. Mean for capacity.

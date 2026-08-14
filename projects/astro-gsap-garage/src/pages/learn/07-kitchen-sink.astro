@@ -1,0 +1,503 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+---
+
+<LearnLayout title="07 · Kitchen sink" session="07" wide>
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 07 · Dump everything</p>
+    <h1>Plugin buffet. Click around.</h1>
+    <p>
+      No narrative — maximum surface area. Each block is a tiny lab for a GSAP tool (plus a few
+      Astro reminders). Steal patterns into your CodeTV landing. Not every plugin needs to ship;
+      this page exists so you’ve <em>felt</em> them once.
+    </p>
+  </header>
+
+  <nav class="sink-toc" aria-label="Jump to demos">
+    <a href="#core">Core / stagger</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#split">SplitText</a>
+    <a href="#scramble">Scramble / Text</a>
+    <a href="#draw">DrawSVG</a>
+    <a href="#morph">MorphSVG</a>
+    <a href="#motion">MotionPath</a>
+    <a href="#flip">Flip</a>
+    <a href="#drag">Draggable</a>
+    <a href="#inertia">Inertia</a>
+    <a href="#physics">Physics2D</a>
+    <a href="#eases">Eases</a>
+    <a href="#scroll">ScrollTrigger</a>
+    <a href="#observer">Observer</a>
+    <a href="#astro">Astro notes</a>
+  </nav>
+
+  <!-- CORE -->
+  <section class="sink-block learn-section" id="core">
+    <h2>Core · from / to / stagger</h2>
+    <div class="learn-demo">
+      <div class="stagger-grid" data-stagger-grid>
+        {Array.from({ length: 18 }).map((_, i) => <div class="stagger-cell" data-stagger-cell style={`background: hsl(${160 + i * 8} 55% 40%)`} />)}
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn learn-btn--solid" data-stagger-run>Stagger in</button>
+        <button type="button" class="learn-btn" data-stagger-out>Stagger out</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="sink-block learn-section" id="timeline">
+    <h2>Timeline · labels + overlap</h2>
+    <div class="learn-demo">
+      <div class="timeline-lane" data-tl-lane>
+        <div class="timeline-chip" data-tl-chip>A</div>
+        <div class="timeline-chip" data-tl-chip>B</div>
+        <div class="timeline-chip" data-tl-chip>C</div>
+        <div class="timeline-chip" data-tl-chip>D</div>
+      </div>
+      <p style="font-family:var(--learn-mono);font-size:0.75rem;color:var(--learn-muted)" data-tl-label>
+        idle
+      </p>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-tl-play>Play timeline</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="sink-row">
+    <!-- SPLIT -->
+    <section class="sink-block learn-section" id="split">
+      <h2>SplitText</h2>
+      <div class="learn-demo">
+        <h3 style="font-family:var(--learn-display);font-size:1.6rem;margin:0" data-split-h>
+          CHAR BY CHAR
+        </h3>
+        <div class="learn-btn-row">
+          <button type="button" class="learn-btn" data-split-run>Animate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCRAMBLE / TEXT -->
+    <section class="sink-block learn-section" id="scramble">
+      <h2>ScrambleText + TextPlugin</h2>
+      <div class="learn-demo">
+        <p class="text-plugin-line" data-scramble7>########</p>
+        <p class="text-plugin-line" data-text7 style="color:var(--learn-accent-2)">…</p>
+        <div class="learn-btn-row">
+          <button type="button" class="learn-btn" data-scramble7-run>Scramble</button>
+          <button type="button" class="learn-btn" data-text7-run>Text type</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="sink-row">
+    <!-- DRAW -->
+    <section class="sink-block learn-section" id="draw">
+      <h2>DrawSVG</h2>
+      <div class="learn-demo draw-svg-demo" style="text-align:center">
+        <svg viewBox="0 0 120 120" fill="none">
+          <circle data-draw-circle cx="60" cy="60" r="40" stroke="#3dd6c6" stroke-width="4" />
+          <path data-draw-star stroke="#ff7a59" stroke-width="3" d="M60 25 L70 50 L98 52 L76 70 L82 96 L60 82 L38 96 L44 70 L22 52 L50 50 Z" />
+        </svg>
+        <div class="learn-btn-row" style="justify-content:center">
+          <button type="button" class="learn-btn" data-draw-run>Draw</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MORPH -->
+    <section class="sink-block learn-section" id="morph">
+      <h2>MorphSVG</h2>
+      <div class="learn-demo" style="text-align:center">
+        <svg viewBox="0 0 100 100" width="140" overflow="visible">
+          <path data-morph7 d="M50 15 L85 85 H15 Z" fill="none" stroke="#f5c84c" stroke-width="4" stroke-linejoin="round" />
+        </svg>
+        <div class="learn-btn-row" style="justify-content:center">
+          <button type="button" class="learn-btn" data-morph7-run>Morph</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MOTION PATH -->
+  <section class="sink-block learn-section" id="motion">
+    <h2>MotionPath</h2>
+    <div class="learn-demo">
+      <div class="motion-wrap" data-motion-wrap>
+        <svg viewBox="0 0 400 140">
+          <path
+            data-motion-path
+            d="M20 100 C100 20, 180 20, 200 70 S320 130, 380 40"
+            fill="none"
+            stroke="#243041"
+            stroke-width="2"
+            stroke-dasharray="4 4"
+          />
+        </svg>
+        <div class="motion-traveler" data-motion-dot></div>
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-motion-run>Travel path</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLIP -->
+  <section class="sink-block learn-section" id="flip">
+    <h2>Flip (mini)</h2>
+    <div class="learn-demo">
+      <div class="flip-grid" data-flip7-grid style="min-height:120px">
+        <div class="flip-item" data-flip7-item><span class="flip-item__dot"></span>One</div>
+        <div class="flip-item" data-flip7-item><span class="flip-item__dot"></span>Two</div>
+        <div class="flip-item" data-flip7-item><span class="flip-item__dot"></span>Three</div>
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-flip7-toggle>Toggle list</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="sink-row">
+    <!-- DRAGGABLE -->
+    <section class="sink-block learn-section" id="drag">
+      <h2>Draggable</h2>
+      <div class="learn-demo" style="min-height:160px; position:relative" data-drag-bounds>
+        <div class="drag-box" data-drag-box>drag me</div>
+      </div>
+    </section>
+
+    <!-- INERTIA -->
+    <section class="sink-block learn-section" id="inertia">
+      <h2>InertiaPlugin (throw)</h2>
+      <div class="learn-demo" style="min-height:160px; display:grid; place-items:center" data-inertia-bounds>
+        <div class="inertia-ball" data-inertia-ball></div>
+        <p style="font-size:0.75rem;color:var(--learn-muted);font-family:var(--learn-mono)">
+          Drag + release — flings with friction
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- PHYSICS -->
+  <section class="sink-block learn-section" id="physics">
+    <h2>Physics2D</h2>
+    <div class="learn-demo">
+      <div class="physics-arena" data-physics-arena>
+        <div class="physics-dot" data-physics-dot></div>
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn learn-btn--solid" data-physics-burst>Burst particles</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EASES -->
+  <section class="sink-block learn-section" id="eases">
+    <h2>CustomEase · bounce · bars</h2>
+    <div class="learn-demo sink-row">
+      <div>
+        <div class="ease-bars">
+          <div class="ease-bar" data-ease-bar style="background:#3dd6c6"></div>
+          <div class="ease-bar" data-ease-bar style="background:#ff7a59"></div>
+          <div class="ease-bar" data-ease-bar style="background:#f5c84c"></div>
+          <div class="ease-bar" data-ease-bar style="background:#7c8cff"></div>
+        </div>
+        <div class="learn-btn-row">
+          <button type="button" class="learn-btn" data-ease-bars>Race eases</button>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="custom-ease-box" data-custom-bounce></div>
+        <div class="learn-btn-row" style="justify-content:center">
+          <button type="button" class="learn-btn" data-bounce-run>CustomBounce</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCROLL -->
+  <section class="sink-block learn-section" id="scroll">
+    <h2>ScrollTrigger · parallax layers</h2>
+    <p style="color:var(--learn-muted);font-size:0.9rem">Scroll through this block — layers drift at different rates.</p>
+    <div style="height:120vh; position:relative">
+      <div class="parallax-stack" style="position:sticky; top:18vh" data-parallax>
+        <div class="parallax-layer" data-plx="0.15">BACK</div>
+        <div class="parallax-layer" data-plx="0.4">MID</div>
+        <div class="parallax-layer" data-plx="0.7">FRONT · scrub me</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBSERVER -->
+  <section class="sink-block learn-section" id="observer">
+    <h2>Observer · counter</h2>
+    <div class="learn-demo">
+      <div class="s6-observer" data-obs7>
+        <div>
+          wheel here
+          <div style="font-size:2rem;color:var(--learn-accent);font-family:var(--learn-display)" data-obs7-n>
+            0
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASTRO -->
+  <section class="sink-block learn-section" id="astro">
+    <h2>Astro reminders (still true)</h2>
+    <div class="learn-callout">
+      <ul style="margin:0;padding-left:1.2rem">
+        <li><code>src/pages/learn/07-….astro</code> → URL <code>/learn/07-kitchen-sink</code></li>
+        <li>All demos live in one <code>&lt;script&gt;</code> island importing from <code>src/lib/gsap.js</code></li>
+        <li>CSS in <code>learn.css</code> is build-bundled; SVGs inline here don’t need <code>public/</code></li>
+        <li>Heavy GLBs stay in <code>public/</code> — same rule as your films</li>
+        <li>For Webflow Cloud: <code>npm run build</code> must stay green with these routes included</li>
+      </ul>
+    </div>
+    <div class="learn-callout learn-warn">
+      Plugins registered but not demoed here (optional later): ScrollSmoother, PixiPlugin,
+      EaselPlugin, CSSRulePlugin, GSDevTools, PhysicsPropsPlugin, MotionPathHelper. Open
+      <code>src/lib/gsap.js</code> — they’re already registered for the whole app.
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/06-explore">← 06</a>
+    <a href="/learn/08-gsdevtools">08 GSDevTools →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  import {
+    gsap,
+    Flip,
+    SplitText,
+    ScrambleTextPlugin,
+    TextPlugin,
+    DrawSVGPlugin,
+    MorphSVGPlugin,
+    MotionPathPlugin,
+    Draggable,
+    InertiaPlugin,
+    Physics2DPlugin,
+    CustomEase,
+    CustomBounce,
+    ScrollTrigger,
+    Observer,
+  } from "../../lib/gsap.js";
+
+  void Flip;
+  void SplitText;
+  void ScrambleTextPlugin;
+  void TextPlugin;
+  void DrawSVGPlugin;
+  void MorphSVGPlugin;
+  void MotionPathPlugin;
+  void Draggable;
+  void InertiaPlugin;
+  void Physics2DPlugin;
+  void CustomEase;
+  void CustomBounce;
+  void ScrollTrigger;
+  void Observer;
+
+  // --- stagger ---
+  const cells = gsap.utils.toArray("[data-stagger-cell]");
+  document.querySelector("[data-stagger-run]")?.addEventListener("click", () => {
+    gsap.fromTo(
+      cells,
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, stagger: { each: 0.03, from: "center" }, ease: "back.out(1.4)" }
+    );
+  });
+  document.querySelector("[data-stagger-out]")?.addEventListener("click", () => {
+    gsap.to(cells, {
+      scale: 0,
+      opacity: 0,
+      duration: 0.3,
+      stagger: { each: 0.02, from: "edges" },
+      ease: "power2.in",
+    });
+  });
+
+  // --- timeline ---
+  const chips = gsap.utils.toArray("[data-tl-chip]");
+  const tlLabel = document.querySelector("[data-tl-label]");
+  document.querySelector("[data-tl-play]")?.addEventListener("click", () => {
+    const tl = gsap.timeline({
+      onUpdate() {
+        if (tlLabel) tlLabel.textContent = `time ${tl.time().toFixed(2)}s · ${tl.currentLabel() || "…"}`;
+      },
+    });
+    gsap.set(chips, { y: 0, opacity: 0.35, scale: 1 });
+    tl.addLabel("start")
+      .to(chips[0], { opacity: 1, scale: 1.15, duration: 0.35 })
+      .addLabel("b")
+      .to(chips[1], { opacity: 1, scale: 1.15, duration: 0.35 }, "-=0.1")
+      .to(chips[2], { opacity: 1, scale: 1.15, duration: 0.35 }, "-=0.1")
+      .to(chips[3], { opacity: 1, scale: 1.15, duration: 0.35 }, "-=0.1")
+      .to(chips, { scale: 1, duration: 0.3 });
+  });
+
+  // --- split ---
+  document.querySelector("[data-split-run]")?.addEventListener("click", () => {
+    const el = document.querySelector("[data-split-h]");
+    if (!el) return;
+    const split = SplitText.create(el, { type: "chars" });
+    gsap.from(split.chars, { y: 28, opacity: 0, rotateX: -40, stagger: 0.03, duration: 0.45, ease: "power3.out" });
+  });
+
+  // --- scramble / text ---
+  document.querySelector("[data-scramble7-run]")?.addEventListener("click", () => {
+    const el = document.querySelector("[data-scramble7]");
+    if (!el) return;
+    gsap.to(el, {
+      duration: 1.1,
+      scrambleText: { text: "MISSION READY", chars: "01X#▪▫" },
+    });
+  });
+  document.querySelector("[data-text7-run]")?.addEventListener("click", () => {
+    const el = document.querySelector("[data-text7]");
+    if (!el) return;
+    el.textContent = "";
+    gsap.to(el, { duration: 1.4, text: "typed with TextPlugin →", ease: "none" });
+  });
+
+  // --- draw ---
+  document.querySelector("[data-draw-run]")?.addEventListener("click", () => {
+    const c = document.querySelector("[data-draw-circle]");
+    const s = document.querySelector("[data-draw-star]");
+    gsap.fromTo(c, { drawSVG: "0%" }, { drawSVG: "100%", duration: 1, ease: "power2.inOut" });
+    gsap.fromTo(s, { drawSVG: "0%" }, { drawSVG: "100%", duration: 1.2, delay: 0.15, ease: "power2.inOut" });
+  });
+
+  // --- morph ---
+  const morphShapes = [
+    "M50 15 L85 85 H15 Z",
+    "M20 50 Q50 15 80 50 Q50 85 20 50 Z",
+    "M25 25 H75 V75 H25 Z",
+    "M50 20 L72 40 L64 78 L36 78 L28 40 Z",
+  ];
+  let morphI = 0;
+  document.querySelector("[data-morph7-run]")?.addEventListener("click", () => {
+    const p = document.querySelector("[data-morph7]");
+    if (!p) return;
+    morphI = (morphI + 1) % morphShapes.length;
+    gsap.to(p, { morphSVG: morphShapes[morphI], duration: 0.7, ease: "power2.inOut" });
+  });
+
+  // --- motion path ---
+  document.querySelector("[data-motion-run]")?.addEventListener("click", () => {
+    const path = document.querySelector("[data-motion-path]");
+    const dot = document.querySelector("[data-motion-dot]");
+    if (!path || !dot) return;
+    gsap.to(dot, {
+      duration: 2,
+      ease: "power1.inOut",
+      motionPath: { path, align: path, alignOrigin: [0.5, 0.5], autoRotate: true },
+    });
+  });
+
+  // --- flip ---
+  const flipGrid = document.querySelector("[data-flip7-grid]");
+  document.querySelector("[data-flip7-toggle]")?.addEventListener("click", () => {
+    if (!flipGrid) return;
+    const state = Flip.getState("[data-flip7-item]");
+    flipGrid.classList.toggle("is-list");
+    Flip.from(state, { duration: 0.55, ease: "power2.inOut", stagger: 0.04, absolute: true });
+  });
+
+  // --- draggable ---
+  const dragBounds = document.querySelector("[data-drag-bounds]");
+  if (dragBounds) {
+    Draggable.create("[data-drag-box]", {
+      bounds: dragBounds,
+      inertia: true,
+      edgeResistance: 0.7,
+    });
+  }
+
+  // --- inertia ball ---
+  const inertiaBounds = document.querySelector("[data-inertia-bounds]");
+  if (inertiaBounds) {
+    Draggable.create("[data-inertia-ball]", {
+      bounds: inertiaBounds,
+      inertia: true,
+      throwResistance: 800,
+    });
+  }
+
+  // --- physics2d burst ---
+  document.querySelector("[data-physics-burst]")?.addEventListener("click", () => {
+    const arena = document.querySelector("[data-physics-arena]");
+    if (!arena) return;
+    for (let i = 0; i < 18; i++) {
+      const d = document.createElement("div");
+      d.className = "physics-dot";
+      d.style.background = `hsl(${150 + i * 12} 70% 55%)`;
+      d.style.left = "50%";
+      d.style.top = "30%";
+      arena.appendChild(d);
+      gsap.to(d, {
+        duration: 2.2,
+        physics2D: {
+          velocity: gsap.utils.random(200, 480),
+          angle: gsap.utils.random(200, 340),
+          gravity: 900,
+        },
+        opacity: 0,
+        onComplete: () => d.remove(),
+      });
+    }
+  });
+
+  // --- eases ---
+  CustomEase.create("hop", "M0,0 C0.4,0 0.2,1 1,1");
+  document.querySelector("[data-ease-bars]")?.addEventListener("click", () => {
+    const bars = gsap.utils.toArray("[data-ease-bar]");
+    const eases = ["power4.out", "elastic.out(1,0.4)", "hop", "bounce.out"];
+    bars.forEach((bar, i) => {
+      gsap.fromTo(bar, { width: "0%" }, { width: "100%", duration: 1.1, ease: eases[i], delay: i * 0.05 });
+    });
+  });
+  document.querySelector("[data-bounce-run]")?.addEventListener("click", () => {
+    const box = document.querySelector("[data-custom-bounce]");
+    if (!box) return;
+    gsap.fromTo(box, { y: -80 }, { y: 0, duration: 1.1, ease: "bounce.out" });
+  });
+
+  // --- scroll parallax ---
+  const plx = document.querySelector("[data-parallax]");
+  if (plx) {
+    plx.querySelectorAll("[data-plx]").forEach((layer) => {
+      const rate = Number(layer.getAttribute("data-plx") || 0.3);
+      gsap.to(layer, {
+        y: () => 80 * rate,
+        ease: "none",
+        scrollTrigger: {
+          trigger: plx.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    });
+  }
+
+  // --- observer counter ---
+  let obsN = 0;
+  const obsNEl = document.querySelector("[data-obs7-n]");
+  Observer.create({
+    target: "[data-obs7]",
+    type: "wheel,touch",
+    wheelSpeed: -1,
+    onChangeY(self) {
+      obsN += self.deltaY > 0 ? 1 : -1;
+      if (obsNEl) obsNEl.textContent = String(obsN);
+    },
+    preventDefault: true,
+  });
+</script>

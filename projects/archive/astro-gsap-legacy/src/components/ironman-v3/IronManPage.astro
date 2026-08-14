@@ -1,0 +1,31 @@
+---
+import Hero from "../ironman-v2/sections/Hero.astro";
+import Assembly from "../ironman-v2/sections/Assembly.astro";
+import Garage3D from "../shared/Garage3D.astro";
+import Systems from "../ironman-v2/sections/Systems.astro";
+import PowerCore from "../ironman-v2/sections/PowerCore.astro";
+import Flight from "../ironman-v2/sections/Flight.astro";
+import Close from "../ironman-v2/sections/Close.astro";
+---
+
+<main data-im-v3>
+  <Hero />
+  <Assembly />
+  <Garage3D
+    theme="iron-man"
+    modelSrc="/models/iron-man-rigged.glb"
+    animSrc="/models/mixamo-anims.glb"
+    kicker="3D suit · pinned"
+    title="Mark 85 teardown"
+    lede="Scroll the pinned stage — Mixamo clips on the rig (idle / gesture / look). Drop Pointing.fbx into _src/mixamo for a better palm beat."
+  />
+  <Systems />
+  <PowerCore />
+  <Flight />
+  <Close />
+</main>
+
+<script>
+  import { initIronManV3 } from "./initIronManV3.js";
+  initIronManV3();
+</script>

@@ -1,0 +1,55 @@
+---
+import "../../styles/learn.css";
+
+interface Props {
+  title: string;
+  session?: string;
+  wide?: boolean;
+}
+
+const { title, session = "", wide = false } = Astro.props;
+
+const sessions = [
+  { href: "/learn/01-astro-basics", id: "01", label: "01" },
+  { href: "/learn/02-props-slots", id: "02", label: "02" },
+  { href: "/learn/03-build-assets", id: "03", label: "03" },
+  { href: "/learn/04-gsap-flip", id: "04", label: "04" },
+  { href: "/learn/05-set-piece", id: "05", label: "05" },
+  { href: "/learn/06-explore", id: "06", label: "06" },
+  { href: "/learn/07-kitchen-sink", id: "07", label: "07" },
+  { href: "/learn/08-gsdevtools", id: "08", label: "08" },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} · Astro + GSAP Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="learn-body">
+    <div class:list={["learn-shell", wide && "learn-shell--wide"]}>
+      <nav class="learn-nav">
+        <a class="learn-nav__brand" href="/learn">Learn Lab</a>
+        <div class="learn-nav__links">
+          {
+            sessions.map((s) => (
+              <a href={s.href} class={session === s.id ? "is-active" : undefined}>
+                {s.label}
+              </a>
+            ))
+          }
+        </div>
+        <a class="learn-nav__exit" href="/">← films</a>
+      </nav>
+      <slot />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+import "../styles/hub.css";
+import SiteNav from "../components/SiteNav/SiteNav.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>GSAP Lab — Astro × GSAP × Webflow</title>
+    <meta name="description" content="Hackathon landing pages — GSAP story beats with compact Three.js finales. Astro × GSAP × Webflow Cloud." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <SiteNav current="home" />
+    <main class="hub">
+      <header class="hub__header">
+        <p class="hub__eyebrow">Astro × GSAP × Webflow Cloud</p>
+        <h1 class="hub__title">Product Stage</h1>
+        <p class="hub__lede">
+          GSAP-first story beats with a compact 3D finale. Pick a subject below.
+        </p>
+      </header>
+
+      <div class="hub__grid">
+        <a class="hub-card" href="/f1">
+          <span class="hub-card__index">01 · F1</span>
+          <h2 class="hub-card__title">AMR23</h2>
+          <p class="hub-card__meta">Grid · track · CFD · telemetry · Beat 10 3D garage</p>
+          <p class="hub-card__plugins">GSAP ScrollTrigger + Three.js finale</p>
+        </a>
+        <a class="hub-card" href="/iron-man">
+          <span class="hub-card__index">02 · Suit</span>
+          <h2 class="hub-card__title">Mark 85</h2>
+          <p class="hub-card__meta">Assembly · systems · reactor · flight · Beat 10 3D suit</p>
+          <p class="hub-card__plugins">GSAP + Mixamo rig finale</p>
+        </a>
+        <a class="hub-card" href="/learn">
+          <span class="hub-card__index">03 · Class</span>
+          <h2 class="hub-card__title">Learn Lab</h2>
+          <p class="hub-card__meta">Astro & GSAP foundations — 8 interactive sessions</p>
+          <p class="hub-card__plugins">GSAP Flip, Morph, DevTools, DrawSVG</p>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

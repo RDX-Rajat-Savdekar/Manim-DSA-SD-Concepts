@@ -1,0 +1,101 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+import DemoCard from "../../components/Learn/DemoCard.astro";
+import NamedSlotPanel from "../../components/Learn/NamedSlotPanel.astro";
+
+const films = [
+  { title: "Mark 85", tag: "suit", tone: "coral" as const, blurb: "Exploded armor tour." },
+  { title: "AMR23", tag: "f1", tone: "teal" as const, blurb: "Green machine teardown." },
+];
+---
+
+<LearnLayout title="02 · Props + slots" session="02">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 02 · Astro components</p>
+    <h1>Props pass data. Slots pass markup.</h1>
+    <p>
+      Components in <code>src/components/</code> are not routes. A page imports them and decides
+      what data and what nested HTML they receive — same idea as your <code>IronManFilm</code>
+      wrapping <code>ProductStage</code>.
+    </p>
+  </header>
+
+  <section class="learn-section">
+    <h2>1. Props (data in)</h2>
+    <p>
+      Declare an <code>interface Props</code>, read <code>Astro.props</code>, pass attributes
+      like HTML.
+    </p>
+    <div class="learn-code">{`<DemoCard title="Mark 85" tag="suit" tone="coral">
+  <p>Child HTML lands in the default slot.</p>
+</DemoCard>`}</div>
+
+    <div class="learn-grid" style="margin-top: 1rem">
+      {
+        films.map((f) => (
+          <DemoCard title={f.title} tag={f.tag} tone={f.tone}>
+            <p>{f.blurb}</p>
+            <p class="slot-accent">This paragraph is slot content from the parent page.</p>
+          </DemoCard>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>2. Default slot vs named slot</h2>
+    <p>
+      <code>&lt;slot /&gt;</code> catches nested children. <code>&lt;slot name="actions" /&gt;</code>
+      catches <code>slot="actions"</code> from the parent.
+    </p>
+    <div class="learn-demo">
+      <NamedSlotPanel heading="Mission control">
+        <button slot="actions" class="learn-btn learn-btn--solid" type="button" data-slot-ping>
+          Ping
+        </button>
+        <p>
+          Default slot body: the button above used <code>slot="actions"</code>, so it jumped into
+          the header. This text stayed in the body.
+        </p>
+      </NamedSlotPanel>
+      <p style="margin:0.75rem 0 0; font-family: var(--learn-mono); font-size: 0.8rem; color: var(--learn-muted)" data-slot-status>
+        Click Ping — client script will confirm the slotted button works.
+      </p>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>3. Mental model for your real films</h2>
+    <div class="learn-callout">
+      <code>F1Film.astro</code> / <code>IronManFilm.astro</code> = layout + copy + props like
+      <code>assemblySequence="/sequences/…")</code>.
+      <br /><br />
+      <code>ProductStage.js</code> = client island that reads those <code>data-*</code> attributes
+      and runs Three + GSAP. Props/slots get you to HTML; islands make it move.
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>Open <code>DemoCard.astro</code> and change the footer string — refresh and see both cards update.</li>
+        <li>Add a third object to the <code>films</code> array in this page’s frontmatter.</li>
+        <li>Move the Ping button out of <code>slot="actions"</code> and watch it fall into the body.</li>
+      </ol>
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/01-astro-basics">← 01</a>
+    <a href="/learn/03-build-assets">03 Build & assets →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  const btn = document.querySelector("[data-slot-ping]");
+  const status = document.querySelector("[data-slot-status]");
+  btn?.addEventListener("click", () => {
+    if (status) status.textContent = "Named-slot button received the click. Islands still work.";
+  });
+</script>

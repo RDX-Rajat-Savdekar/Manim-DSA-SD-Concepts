@@ -1,0 +1,284 @@
+---
+import ProductStage from "../ProductStage/ProductStage.astro";
+import { f1Annotations } from "../../../lib/annotations/f1.js";
+import { lookAttr, hotspotAttr, explodeAttr, noteAttr } from "../../../lib/annotations/helpers.js";
+
+interface ModelCfg {
+  src: string;
+  title: string;
+  product: string;
+  kicker: string;
+  scramble: string;
+  tagline: string;
+  attribution: string;
+  sibling?: { href: string; label: string };
+  bg: string;
+  team?: string;
+  accentNote?: string;
+}
+
+interface Props {
+  model: ModelCfg;
+  assemblySequence?: string;
+}
+
+const { model: m, assemblySequence = "/sequences/f1-amr23" } = Astro.props;
+const A = Object.fromEntries(f1Annotations.map((a) => [String(a.id), a]));
+---
+
+<ProductStage theme="f1" modelSrc={m.src} bg={m.bg} assemblySequence={assemblySequence}>
+  <div slot="hud">
+    <div class="scroll-rail" aria-hidden="true">
+      <span class="scroll-rail__fill" data-scroll-rail></span>
+    </div>
+    <div class="hud-panel hud-panel--tr" data-hud-live>
+      <strong data-telemetry>PIT WALL · LIVE</strong>
+      <span data-hud-scramble data-scramble={m.scramble}>{m.scramble}</span>
+    </div>
+    <div class="hud-panel hud-panel--br" data-hud-live>
+      <strong>LAP DELTA</strong>
+      <div class="hud-mini-stats">
+        <div><span data-count="1.842" data-decimals="3" data-prefix="-">0</span> vs pole</div>
+        <div><span data-count="78" data-suffix="%">0</span> ERS</div>
+      </div>
+    </div>
+    <div data-aero-swarm aria-hidden="true"></div>
+    <svg class="aero-svg" data-draw viewBox="0 0 560 360" fill="none" aria-hidden="true">
+      <path
+        id="aero-path"
+        d="M40 180 C 120 40, 220 40, 300 160 S 460 300, 520 120"
+        stroke="#7cffc4"
+        stroke-width="1.75"
+        stroke-linecap="round"></path>
+      <path
+        d="M60 220 C 160 120, 280 100, 400 180"
+        stroke="#ff2d55"
+        stroke-width="1.4"
+        stroke-linecap="round"></path>
+      <path
+        d="M80 260 C 200 200, 320 210, 480 140"
+        stroke="rgba(124,255,196,0.45)"
+        stroke-width="1.1"
+        stroke-linecap="round"></path>
+      <circle cx="300" cy="160" r="10" stroke="#7cffc4" stroke-width="1.2" fill="none" />
+    </svg>
+    <svg class="speedo" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="speedo__dial" cx="60" cy="60" r="46"></circle>
+      <path class="speedo__arc" d="M20 78 A46 46 0 1 1 100 78"></path>
+      <line class="speedo__needle" data-speed-needle x1="60" y1="60" x2="60" y2="22"></line>
+      <circle cx="60" cy="60" r="4" fill="#7cffc4"></circle>
+    </svg>
+  </div>
+
+  <section
+    class="feature-beat feature-beat--hero"
+    data-look={lookAttr(A.hero.look)}
+    data-spin={String(A.hero.spin)}
+    data-explode={explodeAttr(A.hero)}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker" data-fade>{m.kicker}</p>
+      <h1 class="product-title" data-split>{m.product}</h1>
+      <p class="product-lede" data-fade>{m.tagline}</p>
+      <p class="product-attr">{m.attribution}</p>
+      {
+        m.sibling && (
+          <a class="product-cta" href={m.sibling.href}>
+            {m.sibling.label}
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    id="aero"
+    data-hotspot={hotspotAttr(A["1"])}
+    data-look={lookAttr(A["1"].look)}
+    data-spin={String(A["1"].spin)}
+    data-explode={explodeAttr(A["1"])}
+    data-note={noteAttr(A["1"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">01 · Front wing</p>
+      <h2 data-split>{A["1"].title}</h2>
+      <p data-fade>{A["1"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row">
+          <span>Peak lateral</span><span data-count="5.2" data-decimals="1" data-suffix=" g">0</span>
+        </div>
+        <div class="feature-detail__row"><span>Elements</span><span>Multi-plane</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["2"])}
+    data-look={lookAttr(A["2"].look)}
+    data-spin={String(A["2"].spin)}
+    data-explode={explodeAttr(A["2"])}
+    data-note={noteAttr(A["2"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">02 · Nose & front axle</p>
+      <h2 data-split>{A["2"].title}</h2>
+      <p data-fade>{A["2"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Crash std</span><span>FIA</span></div>
+        <div class="feature-detail__row"><span>Cameras</span><span>Halo / nose</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["3"])}
+    data-look={lookAttr(A["3"].look)}
+    data-spin={String(A["3"].spin)}
+    data-explode={explodeAttr(A["3"])}
+    data-note={noteAttr(A["3"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">03 · Sidepods</p>
+      <h2 data-split>{A["3"].title}</h2>
+      <p data-fade>{A["3"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row" data-sector><span>S1</span><span>28.441</span></div>
+        <div class="feature-detail__row" data-sector><span>S2</span><span>34.902</span></div>
+        <div class="feature-detail__row" data-sector><span>S3</span><span>22.117</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["4"])}
+    data-look={lookAttr(A["4"].look)}
+    data-spin={String(A["4"].spin)}
+    data-explode={explodeAttr(A["4"])}
+    data-note={noteAttr(A["4"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">04 · Halo & cockpit</p>
+      <h2 data-split>{A["4"].title}</h2>
+      <p data-fade>{A["4"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Material</span><span>Ti alloy</span></div>
+        <div class="feature-detail__row"><span>Load test</span><span>12+ tonne</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["5"])}
+    data-look={lookAttr(A["5"].look)}
+    data-spin={String(A["5"].spin)}
+    data-explode={explodeAttr(A["5"])}
+    data-note={noteAttr(A["5"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">05 · Floor & edges</p>
+      <h2 data-split>{A["5"].title}</h2>
+      <p data-fade>{A["5"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Downforce share</span><span>~60% floor</span></div>
+        <div class="feature-detail__row"><span>Porpoising</span><span>Managed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["6"])}
+    data-look={lookAttr(A["6"].look)}
+    data-spin={String(A["6"].spin)}
+    data-explode={explodeAttr(A["6"])}
+    data-note={noteAttr(A["6"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">06 · Rear wing</p>
+      <h2 data-split>{A["6"].title}</h2>
+      <p data-fade>{A["6"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row">
+          <span>DRS trap</span><span data-count="320" data-suffix=" km/h">0</span>
+        </div>
+        <div class="feature-detail__row"><span>Beam wing</span><span>Present</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["7"])}
+    data-look={lookAttr(A["7"].look)}
+    data-spin={String(A["7"].spin)}
+    data-explode={explodeAttr(A["7"])}
+    data-note={noteAttr(A["7"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">07 · Power unit</p>
+      <h2 data-split>{A["7"].title}</h2>
+      <p data-fade>{A["7"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row">
+          <span>System</span><span data-count="1000" data-suffix="+ hp">0</span>
+        </div>
+        <div class="feature-detail__row">
+          <span>MGU-K</span><span data-count="120" data-suffix=" kW">0</span>
+        </div>
+        <div class="feature-detail__row"><span>Fuel</span><span>E10</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["8"])}
+    data-look={lookAttr(A["8"].look)}
+    data-spin={String(A["8"].spin)}
+    data-explode={explodeAttr(A["8"])}
+    data-note={noteAttr(A["8"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">08 · Contact patch</p>
+      <h2 data-split>{A["8"].title}</h2>
+      <p data-fade>{A["8"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Compound</span><span>Soft / Med / Hard</span></div>
+        <div class="feature-detail__row"><span>Window</span><span>°C critical</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-look={lookAttr(A.outro.look)}
+    data-spin={String(A.outro.spin)}
+    data-explode={explodeAttr(A.outro)}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">{m.title}</p>
+      <h2 data-split>Every surface for speed</h2>
+      <p data-fade>Pull back. The teardown lands as one machine.</p>
+      <div class="cta-row">
+        {
+          m.sibling && (
+            <a class="product-cta" href={m.sibling.href}>
+              {m.sibling.label}
+            </a>
+          )
+        }
+        <a class="product-cta" href="/iron-man">Compare Suit →</a>
+      </div>
+    </div>
+  </section>
+</ProductStage>
+
+<script>
+  import { initF1FX } from "./F1.js";
+  initF1FX();
+</script>

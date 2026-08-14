@@ -1,0 +1,275 @@
+---
+import ProductStage from "../ProductStage/ProductStage.astro";
+import { ironManAnnotations } from "../../../lib/annotations/iron-man.js";
+import { lookAttr, hotspotAttr, explodeAttr, noteAttr } from "../../../lib/annotations/helpers.js";
+
+interface ModelCfg {
+  src: string;
+  title: string;
+  product: string;
+  kicker: string;
+  scramble: string;
+  tagline: string;
+  attribution: string;
+  sibling?: { href: string; label: string };
+  bg: string;
+}
+
+interface Props {
+  model: ModelCfg;
+  navCurrent: "iron-man" | "iron-man-body";
+}
+
+const { model: m } = Astro.props;
+const A = Object.fromEntries(ironManAnnotations.map((a) => [String(a.id), a]));
+---
+
+<ProductStage theme="iron-man" modelSrc={m.src} bg={m.bg} assemblySequence="/sequences/iron-man">
+  <div slot="hud">
+    <div class="scroll-rail" aria-hidden="true">
+      <span class="scroll-rail__fill" data-scroll-rail></span>
+    </div>
+    <div class="hud-panel hud-panel--tr" data-hud-live>
+      <strong data-hud-status>SYSTEM BOOT</strong>
+      <span data-hud-scramble data-scramble={m.scramble}>{m.scramble}</span>
+    </div>
+    <div class="hud-panel hud-panel--br" data-hud-live>
+      <strong>SUIT TELEMETRY</strong>
+      <div class="hud-mini-stats">
+        <div><span data-count="97" data-suffix="%">0</span> reactor</div>
+        <div><span data-count="240" data-suffix=" Hz">0</span> gyro</div>
+      </div>
+    </div>
+    <div class="reactor-pulse" aria-hidden="true"></div>
+    <svg class="hud-svg" data-draw viewBox="0 0 400 320" fill="none" aria-hidden="true">
+      <line data-scan x1="48" y1="40" x2="352" y2="40" stroke="rgba(245,179,1,0.35)" stroke-width="1" />
+      <path data-bracket d="M40 40 H120 L150 70" stroke="#f5b301" stroke-width="1.6" />
+      <path data-bracket d="M360 40 H280 L250 70" stroke="#e11d2e" stroke-width="1.6" />
+      <path data-bracket d="M40 280 H110 L150 240" stroke="#f5b301" stroke-width="1.4" />
+      <path data-bracket d="M360 280 H290 L250 240" stroke="#e11d2e" stroke-width="1.4" />
+      <g data-reticle>
+        <circle cx="200" cy="160" r="42" stroke="#f5b301" stroke-width="1.25" />
+        <circle cx="200" cy="160" r="22" stroke="#e11d2e" stroke-width="1.25" />
+        <circle cx="200" cy="160" r="4" fill="#f5b301" />
+        <path
+          d="M200 110 V78 M200 210 V242 M150 160 H118 M250 160 H282"
+          stroke="rgba(245,179,1,0.55)"
+          stroke-width="1.1"></path>
+      </g>
+      <rect x="168" y="128" width="64" height="64" stroke="rgba(225,29,46,0.45)" stroke-width="1" />
+    </svg>
+  </div>
+
+  <section
+    class="feature-beat feature-beat--hero"
+    data-look={lookAttr(A.hero.look)}
+    data-spin={String(A.hero.spin)}
+    data-explode={explodeAttr(A.hero)}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker" data-fade>{m.kicker}</p>
+      <h1 class="product-title" data-split>{m.product}</h1>
+      <p class="product-lede" data-fade>{m.tagline}</p>
+      <p class="product-attr">{m.attribution}</p>
+      {
+        m.sibling && (
+          <a class="product-cta" href={m.sibling.href}>
+            {m.sibling.label}
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    id="reactor"
+    data-hotspot={hotspotAttr(A["1"])}
+    data-look={lookAttr(A["1"].look)}
+    data-spin={String(A["1"].spin)}
+    data-explode={explodeAttr(A["1"])}
+    data-note={noteAttr(A["1"])}
+  >
+    <div class="feature-card" data-sparks style="position:relative">
+      <p class="feature-kicker">01 · Arc Reactor</p>
+      <h2 data-split>{A["1"].title}</h2>
+      <p data-fade>{A["1"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row">
+          <span>Peak output</span><span data-count="8" data-suffix=" GJ">0</span>
+        </div>
+        <div class="feature-detail__row">
+          <span>Boot latency</span><span data-count="0.3" data-decimals="1" data-suffix=" s">0</span>
+        </div>
+        <div class="feature-detail__row">
+          <span>Core temp</span><span data-count="312" data-suffix=" K">0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["2"])}
+    data-look={lookAttr(A["2"].look)}
+    data-spin={String(A["2"].spin)}
+    data-explode={explodeAttr(A["2"])}
+    data-note={noteAttr(A["2"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">02 · Helmet HUD</p>
+      <h2 data-split>{A["2"].title}</h2>
+      <p data-fade>{A["2"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Refresh</span><span>240 Hz</span></div>
+        <div class="feature-detail__row"><span>AI</span><span>J.A.R.V.I.S.</span></div>
+        <div class="feature-detail__row"><span>Visor</span><span>Gold leaf</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["3"])}
+    data-look={lookAttr(A["3"].look)}
+    data-spin={String(A["3"].spin)}
+    data-explode={explodeAttr(A["3"])}
+    data-note={noteAttr(A["3"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">03 · Unibeam</p>
+      <h2 data-split>{A["3"].title}</h2>
+      <p data-fade>{A["3"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Discharge</span><span>Focused beam</span></div>
+        <div class="feature-detail__row">
+          <span>Cool-down</span><span data-count="1.2" data-decimals="1" data-suffix=" s">0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["4"])}
+    data-look={lookAttr(A["4"].look)}
+    data-spin={String(A["4"].spin)}
+    data-explode={explodeAttr(A["4"])}
+    data-note={noteAttr(A["4"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">04 · Repulsors</p>
+      <h2 data-split>{A["4"].title}</h2>
+      <p data-fade>{A["4"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Nozzles</span><span>12</span></div>
+        <div class="feature-detail__row"><span>Mode</span><span>Flight / Blast</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["5"])}
+    data-look={lookAttr(A["5"].look)}
+    data-spin={String(A["5"].spin)}
+    data-explode={explodeAttr(A["5"])}
+    data-note={noteAttr(A["5"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">05 · Boot thrusters</p>
+      <h2 data-split>{A["5"].title}</h2>
+      <p data-fade>{A["5"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Thrust vector</span><span>±32°</span></div>
+        <div class="feature-detail__row"><span>Hover lock</span><span>Active</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["6"])}
+    data-look={lookAttr(A["6"].look)}
+    data-spin={String(A["6"].spin)}
+    data-explode={explodeAttr(A["6"])}
+    data-note={noteAttr(A["6"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">06 · Shoulder pods</p>
+      <h2 data-split>{A["6"].title}</h2>
+      <p data-fade>{A["6"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Payload</span><span>Micro-missile</span></div>
+        <div class="feature-detail__row"><span>Deploy</span><span>Nanite bay</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["7"])}
+    data-look={lookAttr(A["7"].look)}
+    data-spin={String(A["7"].spin)}
+    data-explode={explodeAttr(A["7"])}
+    data-note={noteAttr(A["7"])}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">07 · Back thruster</p>
+      <h2 data-split>{A["7"].title}</h2>
+      <p data-fade>{A["7"].body}</p>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-hotspot={hotspotAttr(A["8"])}
+    data-look={lookAttr(A["8"].look)}
+    data-spin={String(A["8"].spin)}
+    data-explode={explodeAttr(A["8"])}
+    data-note={noteAttr(A["8"])}
+  >
+    <div class="feature-card feature-card--right">
+      <p class="feature-kicker">08 · Nanotech shell</p>
+      <h2 data-split>{A["8"].title}</h2>
+      <p data-fade>{A["8"].body}</p>
+      <div class="feature-detail">
+        <div class="feature-detail__row"><span>Deploy</span><span>&lt; 2 s</span></div>
+        <div class="feature-detail__row">
+          <span>Mass</span><span data-count="42" data-suffix=" kg">0</span>
+        </div>
+        <div class="feature-detail__row">
+          <span>Envelope</span><span data-count="1.3" data-decimals="1" data-prefix="M ">0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="feature-beat"
+    data-look={lookAttr(A.outro.look)}
+    data-spin={String(A.outro.spin)}
+    data-explode={explodeAttr(A.outro)}
+  >
+    <div class="feature-card">
+      <p class="feature-kicker">{m.title}</p>
+      <h2 data-split>Gold over crimson</h2>
+      <p data-fade>Pull back. Every system you inspected still fits one silhouette.</p>
+      <div class="cta-row">
+        {
+          m.sibling && (
+            <a class="product-cta" href={m.sibling.href}>
+              {m.sibling.label}
+            </a>
+          )
+        }
+        <a class="product-cta" href="/f1">Compare F1 →</a>
+      </div>
+    </div>
+  </section>
+</ProductStage>
+
+<script>
+  import { initIronManFX } from "./IronMan.js";
+  initIronManFX();
+</script>

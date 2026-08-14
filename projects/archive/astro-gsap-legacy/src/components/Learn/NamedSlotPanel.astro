@@ -1,0 +1,22 @@
+---
+/**
+ * Named slots demo — parent can fill "actions" separately from default body.
+ */
+interface Props {
+  heading: string;
+}
+
+const { heading } = Astro.props;
+---
+
+<section class="card-shell">
+  <header class="card-shell__head">
+    <strong>{heading}</strong>
+    <div>
+      <slot name="actions" />
+    </div>
+  </header>
+  <div class="card-shell__body">
+    <slot />
+  </div>
+</section>

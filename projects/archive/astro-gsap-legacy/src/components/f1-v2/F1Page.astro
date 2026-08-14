@@ -1,0 +1,24 @@
+---
+import HeroBoot from "./sections/HeroBoot.astro";
+import GridLights from "./sections/GridLights.astro";
+import Racetrack from "./sections/Racetrack.astro";
+import Aero from "./sections/Aero.astro";
+import GarageFlip from "./sections/GarageFlip.astro";
+import Telemetry from "./sections/Telemetry.astro";
+import Close from "./sections/Close.astro";
+---
+
+<main class="f1v2-page" data-f1-v2>
+  <HeroBoot />
+  <GridLights />
+  <Racetrack />
+  <Aero />
+  <GarageFlip />
+  <Telemetry />
+  <Close />
+</main>
+
+<script>
+  import { initF1V2 } from "./initF1V2.js";
+  initF1V2();
+</script>

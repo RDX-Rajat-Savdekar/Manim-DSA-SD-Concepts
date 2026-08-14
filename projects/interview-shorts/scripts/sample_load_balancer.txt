@@ -1,0 +1,9 @@
+[curious] Imagine your feed goes viral overnight.
+One server is now taking every request.
+
+[short pause]
+That single machine runs out of CPU and RAM first.
+Pages that used to load in 200 milliseconds stretch to 10 seconds.
+
+[serious] The first fix is almost always the same:
+add a second server, and put a load balancer in front.

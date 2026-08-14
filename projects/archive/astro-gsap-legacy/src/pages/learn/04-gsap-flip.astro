@@ -1,0 +1,109 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+---
+
+<LearnLayout title="04 · GSAP Flip" session="04">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 04 · GSAP</p>
+    <h1>Flip = animate layout changes</h1>
+    <p>
+      FLIP = First, Last, Invert, Play. You don’t tween <code>x/y</code> by hand. You change the
+      DOM/CSS layout, and Flip figures out the motion between the two states. Perfect for
+      galleries, nav morphs, and “card becomes hero.”
+    </p>
+  </header>
+
+  <section class="learn-section">
+    <h2>Demo A · Grid ↔ list</h2>
+    <div class="learn-demo flip-stage">
+      <div class="learn-demo__label">Click toggle — same elements, new layout</div>
+      <div class="flip-grid" data-flip-grid>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>ScrollTrigger</div>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>SplitText</div>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>DrawSVG</div>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>MorphSVG</div>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>Physics2D</div>
+        <div class="flip-item" data-flip-item><span class="flip-item__dot"></span>ScrambleText</div>
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn learn-btn--solid" data-flip-toggle>Toggle layout</button>
+      </div>
+    </div>
+    <div class="learn-code">{`const state = Flip.getState("[data-flip-item]");
+grid.classList.toggle("is-list");
+Flip.from(state, { duration: 0.7, ease: "power2.inOut", stagger: 0.04 });`}</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Demo B · Thumbnail → feature</h2>
+    <p>One item becomes the featured tile; Flip animates the reflow.</p>
+    <div class="learn-demo">
+      <div class="learn-demo__label">Click a tile</div>
+      <div class="flip-gallery" data-flip-gallery>
+        <button type="button" class="flip-thumb is-feature" data-flip-thumb data-id="A">A</button>
+        <button type="button" class="flip-thumb" data-flip-thumb data-id="B">B</button>
+        <button type="button" class="flip-thumb" data-flip-thumb data-id="C">C</button>
+        <button type="button" class="flip-thumb" data-flip-thumb data-id="D">D</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>When to use Flip on a landing page</h2>
+    <div class="learn-callout">
+      Product strip expand, annotation card moving from hotspot to dock, mobile nav morph,
+      filter chips rearranging a grid. Avoid Flip for continuous scroll camera work — that’s
+      ScrollTrigger + your own lerp (like ProductStage).
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>Toggle grid/list a few times — watch items take curved paths without manual x/y.</li>
+        <li>In the script, change <code>stagger</code> to <code>0.12</code> and feel the cascade.</li>
+        <li>Add a 7th <code>flip-item</code> in the HTML — Flip still works; no new tweens to write.</li>
+      </ol>
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/03-build-assets">← 03</a>
+    <a href="/learn/05-set-piece">05 Set piece →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  import { gsap, Flip } from "../../lib/gsap.js";
+
+  void Flip;
+  void gsap;
+
+  const grid = document.querySelector("[data-flip-grid]");
+  document.querySelector("[data-flip-toggle]")?.addEventListener("click", () => {
+    if (!grid) return;
+    const state = Flip.getState("[data-flip-item]");
+    grid.classList.toggle("is-list");
+    Flip.from(state, {
+      duration: 0.7,
+      ease: "power2.inOut",
+      stagger: 0.04,
+      absolute: true,
+    });
+  });
+
+  const gallery = document.querySelector("[data-flip-gallery]");
+  gallery?.querySelectorAll("[data-flip-thumb]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const state = Flip.getState("[data-flip-thumb]");
+      gallery.querySelectorAll("[data-flip-thumb]").forEach((el) => el.classList.remove("is-feature"));
+      btn.classList.add("is-feature");
+      Flip.from(state, {
+        duration: 0.55,
+        ease: "power3.inOut",
+        absolute: true,
+      });
+    });
+  });
+</script>

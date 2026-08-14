@@ -1,0 +1,269 @@
+---
+const systems = [
+  {
+    id: "reactor",
+    label: "Arc Reactor",
+    title: "Quantum Power Source",
+    power: "3.2 GW",
+    temp: "420 °C",
+    status: "STABLE",
+    body: "Vibranium core output at peak yield. Emitting zero secondary radiation.",
+  },
+  {
+    id: "helmet",
+    label: "Helmet HUD",
+    title: "Targeting Matrix",
+    power: "0.4 GW",
+    temp: "32 °C",
+    status: "ACTIVE",
+    body: "Threat projection and telemetry overlays linked directly to ocular sensors.",
+  },
+  {
+    id: "repulsors",
+    label: "Palm Repulsors",
+    title: "Dual Particle Beam",
+    power: "1.8 GW",
+    temp: "185 °C",
+    status: "CHARGING",
+    body: "Flight stabilizers calibrated. Arming sequence ready on manual discharge.",
+  },
+  {
+    id: "boots",
+    label: "Boot Thrusters",
+    title: "Stabilized Lift Core",
+    power: "2.4 GW",
+    temp: "680 °C",
+    status: "STANDBY",
+    body: "Thrust vectors online. Capable of achieving Mach 2.4 under full load.",
+  },
+];
+---
+
+<section class="imv2-section imv2-systems-diagnostic" id="systems" data-im-systems>
+  <div class="diagnostic-container">
+    <div class="diagnostic-info">
+      <p class="imv2-kicker">Systems Tour · Interactive</p>
+      <h2 class="imv2-title">Diagnostics Live</h2>
+      <p class="imv2-lede">Select any subsystem on the suit wireframe to query the live telemetry status and core energy distribution.</p>
+
+      <div class="diagnostic-cards">
+        {
+          systems.map((s, i) => (
+            <div class="diag-card" data-diag-id={s.id} data-im-sys>
+              <div class="diag-card__header">
+                <span class="diag-card__index">0{i + 1}</span>
+                <h3 class="diag-card__title">{s.label}</h3>
+                <span class="diag-card__status" data-status={s.status.toLowerCase()}>{s.status}</span>
+              </div>
+              <p class="diag-card__desc">{s.body}</p>
+              <div class="diag-card__stats">
+                <div><span>OUTPUT</span><span class="hud-value">{s.power}</span></div>
+                <div><span>TEMP</span><span class="hud-value">{s.temp}</span></div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="diagnostic-visualizer">
+      <!-- Suit wireframe SVG -->
+      <div class="hud-frame">
+        <svg viewBox="0 0 400 500" class="suit-svg" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer circular HUD frame -->
+          <circle cx="200" cy="230" r="180" fill="none" stroke="rgba(245, 179, 1, 0.08)" stroke-width="1.5" stroke-dasharray="10 6" />
+          <circle cx="200" cy="230" r="190" fill="none" stroke="rgba(245, 179, 1, 0.03)" stroke-width="1" />
+
+          <!-- High-tech crosshairs -->
+          <line x1="20" y1="230" x2="380" y2="230" stroke="rgba(245, 179, 1, 0.04)" stroke-width="1" />
+          <line x1="200" y1="20" x2="200" y2="440" stroke="rgba(245, 179, 1, 0.04)" stroke-width="1" />
+
+          <!-- Stylized Suit outline -->
+          <!-- Helmet -->
+          <path id="part-helmet" class="suit-part" d="M175 90 Q200 45 225 90 L220 115 H180 Z" fill="rgba(245, 179, 1, 0.03)" stroke="rgba(245, 179, 1, 0.25)" stroke-width="1.5" />
+          <!-- Chest / Reactor -->
+          <path id="part-reactor" class="suit-part" d="M165 125 L235 125 L245 170 L200 205 L155 170 Z" fill="rgba(245, 179, 1, 0.03)" stroke="rgba(245, 179, 1, 0.25)" stroke-width="1.5" />
+          <!-- Reactor core circle -->
+          <circle id="part-reactor-core" cx="200" cy="155" r="12" fill="none" stroke="#f5b301" stroke-width="2" class="glow-pulse" />
+          
+          <!-- Arms / Palm Repulsors -->
+          <path id="part-repulsors" class="suit-part" d="M150 135 L120 160 L100 210 L85 240 M250 135 L280 160 L300 210 L315 240" fill="none" stroke="rgba(245, 179, 1, 0.25)" stroke-width="1.5" />
+          <circle cx="85" cy="242" r="6" fill="#f5b301" opacity="0.8" />
+          <circle cx="315" cy="242" r="6" fill="#f5b301" opacity="0.8" />
+
+          <!-- Legs / Boots -->
+          <path id="part-boots" class="suit-part" d="M165 290 L155 380 L140 430 H170 L175 390 M235 290 L245 380 L260 430 H230 L225 390" fill="none" stroke="rgba(245, 179, 1, 0.25)" stroke-width="1.5" />
+          <line x1="140" y1="430" x2="170" y2="430" stroke="#f5b301" stroke-width="2.5" />
+          <line x1="230" y1="430" x2="260" y2="430" stroke="#f5b301" stroke-width="2.5" />
+
+          <!-- Dynamic sweep scanning laser lines -->
+          <line id="hud-scanner" x1="10" y1="50" x2="390" y2="50" stroke="#f5b301" stroke-width="1.5" opacity="0" />
+        </svg>
+
+        <!-- Dynamic sweep label -->
+        <div class="hud-status" data-hud-status>SYS OK</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .imv2-systems-diagnostic {
+    background: #080505;
+    padding: 6rem 1.5rem;
+    position: relative;
+  }
+  .diagnostic-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .diagnostic-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .diagnostic-cards {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .diag-card {
+    padding: 1.25rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .diag-card:hover,
+  .diag-card.is-active {
+    background: rgba(245, 179, 1, 0.05);
+    border-color: rgba(245, 179, 1, 0.45);
+    transform: translateX(4px);
+  }
+  .diag-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .diag-card__index {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: #f5b301;
+  }
+  .diag-card__title {
+    margin: 0;
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+  .diag-card__status {
+    margin-left: auto;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .diag-card__status[data-status="stable"] { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
+  .diag-card__status[data-status="active"] { background: rgba(0, 240, 255, 0.15); color: #00f0ff; }
+  .diag-card__status[data-status="charging"] { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; }
+  .diag-card__status[data-status="standby"] { background: rgba(255, 255, 255, 0.1); color: #ccc; }
+
+  .diag-card__desc {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: rgba(244, 241, 234, 0.65);
+  }
+  .diag-card__stats {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 0.6rem;
+  }
+  .diag-card__stats div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .diag-card__stats .hud-value {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .diagnostic-visualizer {
+    display: grid;
+    place-items: center;
+  }
+  .hud-frame {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 4/5;
+    border-radius: 16px;
+    border: 1px solid rgba(245, 179, 1, 0.08);
+    background: radial-gradient(circle at 50% 45%, rgba(245, 179, 1, 0.03), transparent 75%), #050303;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    overflow: hidden;
+  }
+  .suit-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .suit-part {
+    transition: stroke 0.3s, fill 0.3s;
+  }
+  .suit-part.is-highlighted {
+    stroke: #f5b301 !important;
+    fill: rgba(245, 179, 1, 0.12) !important;
+    filter: drop-shadow(0 0 8px rgba(245, 179, 1, 0.45));
+  }
+  .hud-status {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(245, 179, 1, 0.25);
+    border-radius: 4px;
+    background: rgba(245, 179, 1, 0.08);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: #f5b301;
+    text-transform: uppercase;
+  }
+  
+  .glow-pulse {
+    animation: core-glow 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes core-glow {
+    from {
+      filter: drop-shadow(0 0 2px rgba(245, 179, 1, 0.5));
+      opacity: 0.6;
+    }
+    to {
+      filter: drop-shadow(0 0 12px rgba(245, 179, 1, 1));
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .diagnostic-container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

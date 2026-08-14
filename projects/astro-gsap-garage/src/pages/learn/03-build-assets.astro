@@ -1,0 +1,111 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+// Build-time only: read a public file into the HTML (demo of SSR/build capability).
+const markPath = fileURLToPath(new URL("../../../public/learn/astro-mark.svg", import.meta.url));
+let markBytes = 0;
+try {
+  markBytes = readFileSync(markPath).byteLength;
+} catch {
+  markBytes = -1;
+}
+---
+
+<LearnLayout title="03 · Build & assets" session="03">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 03 · Ship mindset</p>
+    <h1>What leaves the machine</h1>
+    <p>
+      Webflow Cloud (and any static host) doesn’t run <code>astro dev</code>. It runs
+      <code>astro build</code>, then serves the output folder. Understanding that is half of
+      “deploy.”
+    </p>
+  </header>
+
+  <section class="learn-section">
+    <h2>1. Dev vs build</h2>
+    <div class="build-map">
+      <div>
+        <span>npm run dev</span>
+        <span>→</span>
+        <span class="muted">Vite server · HMR · /learn live</span>
+      </div>
+      <div>
+        <span>npm run build</span>
+        <span>→</span>
+        <span class="muted">dist/ HTML + hashed assets</span>
+      </div>
+      <div>
+        <span>npm run preview</span>
+        <span>→</span>
+        <span class="muted">Serve dist/ locally like production</span>
+      </div>
+    </div>
+    <div class="learn-callout" style="margin-top:1rem">
+      Competition checklist: <code>npm run build</code> must succeed, then connect the GitHub repo
+      to Webflow Cloud and deploy. Your live URL is the submission artifact.
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>2. Two asset pipelines</h2>
+    <div class="learn-grid">
+      <div class="learn-demo">
+        <div class="learn-demo__label">public/</div>
+        <p style="margin:0 0 0.5rem; font-size:0.9rem">
+          Copied 1:1. URL = file path. Great for GLBs, HDRIs, sequence WebPs, favicons.
+        </p>
+        <img src="/learn/astro-mark.svg" width="64" height="64" alt="" />
+        <p style="margin:0.5rem 0 0; font-family:var(--learn-mono); font-size:0.75rem; color:var(--learn-muted)">
+          /learn/astro-mark.svg · {markBytes} bytes (read at build from disk)
+        </p>
+      </div>
+      <div class="learn-demo">
+        <div class="learn-demo__label">src/ (imported)</div>
+        <p style="margin:0; font-size:0.9rem">
+          CSS/JS imported by pages get bundled + fingerprinted
+          (<code>assets/LearnLayout.…css</code>). Cache-busting for free. Don’t put multi‑MB
+          models here.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>3. Why your films use <code>data-*</code> + client JS</h2>
+    <div class="learn-code">{`<!-- Astro template emits attributes -->
+<div data-product-stage data-model="/models/iron-man.glb" …>
+
+<script>
+  // Client reads attributes and boots Three + GSAP
+  initProductStage();
+</script>`}</div>
+    <p>
+      Build emits the HTML shell + a JS chunk. The GLB stays in <code>public/</code> and loads
+      over HTTP when the island asks for it. Same pattern as this learn mark SVG.
+    </p>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>In a second terminal: <code>npm run build && npm run preview</code>.</li>
+        <li>Open the preview URL’s <code>/learn</code> — confirm sessions still work.</li>
+        <li>Peek inside <code>dist/</code>: find an HTML file for learn + an <code>assets/</code> folder.</li>
+        <li>Note: <code>public/learn/astro-mark.svg</code> appears under <code>dist/learn/</code> unchanged.</li>
+      </ol>
+    </div>
+    <div class="learn-callout learn-warn">
+      You don’t need Webflow Cloud for this session — <code>preview</code> is the same mental
+      model. Cloud is “preview, but on their CDN after git push.”
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/02-props-slots">← 02</a>
+    <a href="/learn/04-gsap-flip">04 GSAP Flip →</a>
+  </nav>
+</LearnLayout>

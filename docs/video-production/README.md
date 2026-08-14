@@ -13,6 +13,7 @@
 |---|-----|------|
 | 1 | [00-QUICK-START.md](00-QUICK-START.md) | Whole pipeline on one page |
 | 2 | [04-AGENT-ONBOARDING.md](04-AGENT-ONBOARDING.md) | Before writing Manim |
+| 2b | [MANIM-AGENT-LESSONS.md](MANIM-AGENT-LESSONS.md) | **Required** — Manim footguns (text, portrait, labels) |
 | 3 | [01-MANIM-CHAPTER-PIPELINE.md](01-MANIM-CHAPTER-PIPELINE.md) | Multi-chapter / act-based videos |
 | 4 | [02-VO-RECORDING-AND-SYNC.md](02-VO-RECORDING-AND-SYNC.md) | Phone VO → final MP4 |
 | 5 | [07-NEW-PROJECT-SETUP.md](07-NEW-PROJECT-SETUP.md) | Adding a new resume project |
@@ -30,6 +31,7 @@
 | **Aura 60s clip** | Short Manim + B-roll + music | [projects/aura-60s.md](projects/aura-60s.md) |
 | **Celestia presentation** | Manim deck (OpenGL, clip-per-scene) | [projects/celestia-presentation.md](projects/celestia-presentation.md) |
 | **DSA toolkit** | Reusable Manim library + sample scenes | [projects/dsa-toolkit.md](projects/dsa-toolkit.md) |
+| **Interview shorts** | IG vertical Manim + Gemini TTS | `projects/interview-shorts/` — see [MANIM-AGENT-LESSONS.md](MANIM-AGENT-LESSONS.md) |
 
 Add a row + `projects/<name>.md` for each new portfolio video.
 

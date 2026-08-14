@@ -1,0 +1,43 @@
+---
+interface Props { current?: string; }
+const { current = "" } = Astro.props;
+---
+
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="/" class:list={["site-nav__link", { "is-active": current === "home" }]}>Hub</a>
+  <a href="/f1" class:list={["site-nav__link", { "is-active": current === "f1" }]}>AMR23</a>
+  <a href="/iron-man" class:list={["site-nav__link", { "is-active": current === "iron-man" }]}>Mark 85</a>
+  <a href="/learn" class:list={["site-nav__link", { "is-active": current === "learn" }]}>Learn</a>
+</nav>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.65rem 1.25rem;
+    background: rgba(6, 8, 12, 0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .site-nav__link {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(238, 245, 241, 0.65);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .site-nav__link:hover,
+  .site-nav__link.is-active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+</style>

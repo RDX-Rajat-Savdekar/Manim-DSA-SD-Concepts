@@ -7,12 +7,21 @@ Project-specific details: per-project journals (e.g. [`Aura/journal.md`](../../A
 
 ## Manim production
 
+**Full footgun list (agents must read):** [MANIM-AGENT-LESSONS.md](MANIM-AGENT-LESSONS.md)
+
 | Mistake | Fix |
 |---------|-----|
 | All beats in one Scene | One act/scene per file + layout plop first |
 | Hand-drawn icons | SVG assets |
 | `VideoMobject` unavailable / brittle | PyAV → `ImageMobject` updaters |
 | Scaling groups with `Text` | Typography helpers; size plates, don't scale copy |
+| Helvetica Neue / bad Pango fonts | Use `DejaVu Sans`; clear `media/texts/` after font changes |
+| Label width-fitted to brace | Never stretch text to brace span |
+| `-ql` ignores portrait cfg | Set `frame_width/height` in scene + pass `--resolution H,W` |
+| Content under IG/YT Shorts chrome | `projects/interview-shorts/safe_zone.py` — top 12% / bottom 24% / right 18% clear |
+| Visuals before VO on narrated shorts | **VO-first** — script → Puck → animate → mux |
+| Bare `manim -qh` → 60fps / wrong out dir | `tools/render_short.sh` with `--fps 30` locked |
+| Tiny labels after safe-zone shrink | Title ≥30 / body ≥20 / tags ≥18 |
 | ffmpeg concat relative paths | **Absolute paths** in list files |
 | Blocking on plan duration targets | Visual-first; tune after VO |
 | Agent asks user to spot layout | Agent runs frame extract + inspects PNGs |

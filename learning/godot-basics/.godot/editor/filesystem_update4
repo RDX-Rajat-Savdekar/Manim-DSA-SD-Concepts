@@ -1,6 +1,0 @@
-res://scenes/main_presentation.tscn
-res://scripts/star_field.gd
-res://scripts/orbit_camera.gd
-res://scripts/main_presentation.gd
-res://scripts/stage4_portal.gd
-res://scripts/stage5_physics_sandbox.gd

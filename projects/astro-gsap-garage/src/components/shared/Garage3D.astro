@@ -1,0 +1,104 @@
+---
+interface Props {
+  theme?: "f1" | "iron-man";
+  modelSrc: string;
+  animSrc?: string;
+  kicker?: string;
+  title?: string;
+  lede?: string;
+  scramble?: string;
+  /** Smaller pinned stage — finale addon, not the whole page. */
+  compact?: boolean;
+}
+
+const {
+  theme = "f1",
+  modelSrc,
+  animSrc = "",
+  kicker = "Beat 10 · Interactive finale",
+  title = "The real machine",
+  lede = "A compact 3D reward after the GSAP story — authored cameras, HUD, strip tour. Scroll to scrub.",
+  scramble = theme === "f1" ? "AMR23 · GREEN" : "MARK 85 · ONLINE",
+  compact = true,
+} = Astro.props;
+
+const accent = theme === "f1" ? "#7cffc4" : "#f5b301";
+---
+
+<section
+  class:list={["garage3d", compact && "garage3d--compact"]}
+  data-garage3d
+  data-theme={theme}
+  data-model={modelSrc}
+  data-anims={animSrc || undefined}
+  data-compact={compact ? "1" : undefined}
+  id="garage-3d"
+  style={`--g3-accent:${accent}; --g3-accent-2:${theme === "f1" ? "#ff2d55" : "#ff2a2a"}`}
+>
+  <div class="garage3d__head">
+    <p class="garage3d__kicker">{kicker}</p>
+    <h2 class="garage3d__title">{title}</h2>
+    <p class="garage3d__lede">{lede}</p>
+  </div>
+
+  <div class="garage3d__stage" data-garage3d-pin>
+    <canvas class="garage3d__canvas" data-garage3d-canvas></canvas>
+
+    <div class="garage3d__vignette" aria-hidden="true"></div>
+    <div class="garage3d__grain" aria-hidden="true"></div>
+    <div class="garage3d__scan" aria-hidden="true"></div>
+
+    <div class="garage3d__swarm" data-garage3d-swarm aria-hidden="true"></div>
+
+    <div class="garage3d__scroll-rail" aria-hidden="true">
+      <span data-garage3d-rail></span>
+    </div>
+
+    <div class="garage3d__hud garage3d__hud--tr" data-hud-live>
+      <strong data-garage3d-tele>{theme === "f1" ? "PIT WALL · LIVE" : "SUIT · SCAN"}</strong>
+      <span data-garage3d-scramble>{scramble}</span>
+    </div>
+    <div class="garage3d__hud garage3d__hud--br" data-hud-live>
+      <strong>{theme === "f1" ? "LAP DELTA" : "POWER CORE"}</strong>
+      <div class="garage3d__mini">
+        {theme === "f1" ? (
+          <>
+            <div><span data-garage3d-delta>-0.000</span> vs pole</div>
+            <div><span data-garage3d-ers>0</span>% ERS</div>
+          </>
+        ) : (
+          <>
+            <div><span data-garage3d-delta>0.000</span> GW</div>
+            <div><span data-garage3d-ers>0</span>% charge</div>
+          </>
+        )}
+      </div>
+    </div>
+
+    <aside class="garage3d__schematic" data-garage3d-schematic aria-hidden="true">
+      <p class="garage3d__schematic-label" data-garage3d-schematic-label>Part schematic</p>
+      <div class="garage3d__schematic-frame">
+        <img data-garage3d-schematic-img src="" alt="" width="128" height="128" />
+      </div>
+    </aside>
+
+    <div class="garage3d__hotspots" data-garage3d-hotspots aria-label="Model parts"></div>
+
+    <article class="garage3d__card" data-garage3d-card>
+      <p class="garage3d__card-kicker" data-garage3d-card-kicker>01 · Part</p>
+      <h3 data-garage3d-card-title>Loading</h3>
+      <p data-garage3d-card-body></p>
+      <div class="garage3d__card-stats" data-garage3d-card-stats></div>
+    </article>
+
+    <div class="garage3d__dof" aria-hidden="true">
+      <span>FOCUS</span>
+      <div class="garage3d__dof-bar"><i data-garage3d-dof></i></div>
+      <span data-garage3d-dof-label>deep</span>
+    </div>
+
+    <nav class="garage3d__strip" data-garage3d-strip aria-label="Part tour"></nav>
+
+    <div class="garage3d__loading" data-garage3d-loading>Loading model…</div>
+  </div>
+</section>

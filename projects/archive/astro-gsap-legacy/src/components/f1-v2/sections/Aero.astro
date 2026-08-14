@@ -1,0 +1,189 @@
+---
+---
+
+<section class="f1v2-section f1v2-aero" id="aero" data-f1-aero>
+  <div class="aero-container">
+    <div class="aero-info">
+      <p class="f1v2-kicker">Interactive CFD Simulator</p>
+      <h2 class="f1v2-title">Aerodynamic Flow</h2>
+      <p class="f1v2-lede">
+        Adjust the wind tunnel speed and toggle the Drag Reduction System (DRS) wing morphing to optimize the aerodynamic envelope.
+      </p>
+
+      <div class="aero-controls">
+        <div class="control-group">
+          <label for="wind-speed">Wind Tunnel Speed: <span data-wind-label>240</span> km/h</label>
+          <input type="range" id="wind-speed" min="80" max="360" value="240" step="10" class="aero-slider" data-wind-slider />
+        </div>
+        <div class="control-group">
+          <button class="aero-btn" data-f1-drs-toggle>Toggle DRS Wing</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="aero-visualizer">
+      <!-- High-tech wind tunnel frame -->
+      <div class="tunnel-frame">
+        <!-- CFD SVG Car outline + flow streams -->
+        <svg viewBox="0 0 800 400" class="cfd-svg" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7cffc4" stop-opacity="0.1" />
+              <stop offset="50%" stop-color="#7cffc4" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#00ffff" stop-opacity="0.1" />
+            </linearGradient>
+            <linearGradient id="flow-grad-drs" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff2d55" stop-opacity="0.1" />
+              <stop offset="50%" stop-color="#ff2d55" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#ff9f0a" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+
+          <!-- Wind tunnel grid lines -->
+          <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+            <line x1="0" y1="100" x2="800" y2="100" />
+            <line x1="0" y1="200" x2="800" y2="200" />
+            <line x1="0" y1="300" x2="800" y2="300" />
+            <line x1="200" y1="0" x2="200" y2="400" />
+            <line x1="400" y1="0" x2="400" y2="400" />
+            <line x1="600" y1="0" x2="600" y2="400" />
+          </g>
+
+          <!-- F1 Car Outline Profile (Clean vector) -->
+          <path d="M120 280 L180 280 Q220 260 260 260 L360 260 Q400 240 440 245 L500 250 Q560 220 620 220 L680 225 L700 215 L720 230 L730 270 H100 Z" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.18)" stroke-width="2" />
+
+          <!-- Wheels -->
+          <circle cx="210" cy="275" r="45" fill="#08080a" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+          <circle cx="590" cy="275" r="45" fill="#08080a" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+
+          <!-- Interactive Morphing DRS Wing element -->
+          <path id="drs-wing" d="M685 205 L722 205 L716 220 L691 220 Z" fill="#7cffc4" opacity="0.85" />
+
+          <!-- CFD Streamlines -->
+          <!-- Streamline 1 (Over Nose/Cockpit) -->
+          <path class="streamline" d="M 50 160 Q 220 160 300 200 T 520 210 Q 600 180 690 205 T 750 250" fill="none" stroke="url(#flow-grad)" stroke-width="3" stroke-dasharray="15 35" />
+          <!-- Streamline 2 (Sidepod inlet/exhaust) -->
+          <path class="streamline" d="M 50 230 Q 200 220 260 250 T 450 248 Q 540 230 680 222 T 750 280" fill="none" stroke="url(#flow-grad)" stroke-width="3" stroke-dasharray="25 45" />
+          <!-- Streamline 3 (Underfloor ground effect) -->
+          <path class="streamline" d="M 50 290 Q 200 288 350 288 T 680 288 L 750 290" fill="none" stroke="url(#flow-grad)" stroke-width="2.5" stroke-dasharray="10 30" stroke-opacity="0.8" />
+          <!-- Streamline 4 (High flow roofline) -->
+          <path class="streamline" d="M 50 110 Q 300 110 420 140 T 600 150 Q 670 170 750 220" fill="none" stroke="url(#flow-grad)" stroke-width="2" stroke-dasharray="30 60" />
+        </svg>
+
+        <!-- Vortex particles container -->
+        <div class="vortex-container" data-f1-particles></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aero-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .aero-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .aero-controls {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .control-group {
+    margin-bottom: 1.25rem;
+  }
+  .control-group:last-child {
+    margin-bottom: 0;
+  }
+  .control-group label {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 0.5rem;
+  }
+  .aero-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
+  .aero-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--g3-accent, #7cffc4);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--g3-accent, #7cffc4);
+  }
+  .aero-btn {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .aero-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  .aero-visualizer {
+    position: relative;
+  }
+  .tunnel-frame {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: radial-gradient(circle at 50% 50%, #0c0e12, #050608);
+    overflow: hidden;
+    aspect-ratio: 2/1;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+  }
+  .cfd-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .streamline {
+    stroke-dashoffset: 500;
+    animation: flow-run 5s linear infinite;
+  }
+  @keyframes flow-run {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .vortex-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @media (max-width: 900px) {
+    .aero-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,272 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+---
+
+<LearnLayout title="06 · Explore more" session="06">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Session 06 · Deeper set piece</p>
+    <h1>Draw. Path. Timeline. Observer.</h1>
+    <p>
+      Same vibe as 05 — one cinematic page — but you explore four more tools you’ll actually
+      use on a landing: SVG stroke draw-on, motion along a path, sequenced timelines with
+      custom eases, and Observer (wheel/touch without a scrollbar).
+    </p>
+  </header>
+
+  <!-- Hero stage -->
+  <section class="s6-stage learn-demo" style="margin-top:0" data-s6-stage>
+    <svg class="s6-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path
+        class="s6-draw"
+        data-s6-draw
+        d="M80 300 C180 80, 320 80, 400 210 S620 340, 720 120"
+      />
+      <circle class="s6-path-dot" data-s6-dot r="7" cx="80" cy="300" />
+    </svg>
+    <div>
+      <p class="learn-eyebrow">Flight path online</p>
+      <h1 data-s6-title>TRACE THE ARC</h1>
+      <p class="s6-sub" data-s6-line>drawing vector…</p>
+      <div class="learn-btn-row" style="justify-content:center; margin-top:1rem">
+        <button type="button" class="learn-btn learn-btn--solid" data-s6-replay>Replay intro</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>1. DrawSVG + MotionPath (together)</h2>
+    <p>
+      DrawSVG animates stroke reveal (<code>0% 0%</code> → <code>0% 100%</code>). MotionPath
+      parks a dot on the same path and scrub-follows it. One SVG, two plugins.
+    </p>
+    <div class="learn-code">{`gsap.fromTo(path, { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1.4 });
+gsap.to(dot, { motionPath: { path, align: path, autoRotate: true }, duration: 1.4 });`}</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>2. Timeline chapters (staggered story)</h2>
+    <p>Click play — a timeline lights chapters in order with overlaps (<code>"-=0.2"</code>).</p>
+    <div class="learn-demo">
+      <div class="s6-chapters" data-s6-chapters>
+        <div class="s6-chapter" data-chapter>
+          <strong>01 · Acquire lock</strong>
+          SplitText / scramble the status line.
+        </div>
+        <div class="s6-chapter" data-chapter>
+          <strong>02 · Draw the route</strong>
+          DrawSVG paints the vector the camera will follow.
+        </div>
+        <div class="s6-chapter" data-chapter>
+          <strong>03 · Commit thrust</strong>
+          MotionPath + CustomEase sell the “launch.”
+        </div>
+      </div>
+      <div class="learn-btn-row">
+        <button type="button" class="learn-btn" data-s6-chapters-play>Play chapter timeline</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>3. CustomWiggle (personality)</h2>
+    <div class="learn-demo" style="text-align:center">
+      <div class="learn-demo__label">Click — organic shake, not a linear tween</div>
+      <div class="s6-wiggle-box" data-s6-wiggle></div>
+      <div class="learn-btn-row" style="justify-content:center">
+        <button type="button" class="learn-btn" data-s6-wiggle-btn>Wiggle</button>
+      </div>
+    </div>
+    <div class="learn-code">{`gsap.to(box, { rotation: 8, duration: 0.9, ease: "wiggle({ type: 'easeOut', wiggles: 8 })" });`}</div>
+  </section>
+
+  <section class="learn-section">
+    <h2>4. Observer (wheel / swipe chapters)</h2>
+    <p>
+      No page scroll required. Wheel or swipe on the pad to step an index — same idea as
+      full-page “slides” landings without ScrollTrigger.
+    </p>
+    <div class="learn-demo">
+      <div class="s6-observer" data-s6-observer>
+        <div>
+          wheel / swipe here
+          <div><span data-s6-obs-n>1</span> / 4</div>
+          <div data-s6-obs-label style="margin-top:0.35rem;color:var(--learn-text)">Idle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2>Try this</h2>
+    <div class="learn-callout">
+      <ol style="margin:0; padding-left:1.2rem">
+        <li>Replay intro — watch stroke + dot share one path.</li>
+        <li>Play chapters — then change a chapter label in the HTML.</li>
+        <li>Wiggle a few times; bump <code>wiggles: 8</code> to <code>14</code>.</li>
+        <li>Swipe the Observer pad until label hits “Touchdown.”</li>
+      </ol>
+    </div>
+  </section>
+
+  <nav class="learn-pager">
+    <a href="/learn/05-set-piece">← 05</a>
+    <a href="/learn/07-kitchen-sink">07 Kitchen sink →</a>
+  </nav>
+</LearnLayout>
+
+<script>
+  import {
+    gsap,
+    DrawSVGPlugin,
+    MotionPathPlugin,
+    CustomWiggle,
+    Observer,
+    SplitText,
+    TextPlugin,
+  } from "../../lib/gsap.js";
+
+  void DrawSVGPlugin;
+  void MotionPathPlugin;
+  void CustomWiggle;
+  void Observer;
+  void SplitText;
+  void TextPlugin;
+
+  const path = document.querySelector("[data-s6-draw]");
+  const dot = document.querySelector("[data-s6-dot]");
+  const line = document.querySelector("[data-s6-line]");
+  const title = document.querySelector("[data-s6-title]");
+
+  function playIntro() {
+    if (title) {
+      const split = SplitText.create(title, { type: "chars" });
+      gsap.from(split.chars, {
+        y: 36,
+        opacity: 0,
+        stagger: 0.028,
+        duration: 0.5,
+        ease: "power3.out",
+      });
+    }
+
+    if (line) {
+      gsap.to(line, {
+        duration: 1.1,
+        text: "vector locked · path armed",
+        ease: "none",
+      });
+    }
+
+    if (path) {
+      gsap.fromTo(
+        path,
+        { drawSVG: "0% 0%" },
+        { drawSVG: "0% 100%", duration: 1.5, ease: "power2.inOut" }
+      );
+    }
+
+    if (dot && path) {
+      gsap.fromTo(
+        dot,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1.5,
+          ease: "power1.inOut",
+          motionPath: {
+            path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true,
+          },
+        }
+      );
+    }
+  }
+
+  playIntro();
+  document.querySelector("[data-s6-replay]")?.addEventListener("click", () => {
+    gsap.killTweensOf([path, dot, line].filter(Boolean));
+    playIntro();
+  });
+
+  // Chapter timeline
+  const chapters = gsap.utils.toArray("[data-chapter]");
+  document.querySelector("[data-s6-chapters-play]")?.addEventListener("click", () => {
+    gsap.set(chapters, { clearProps: "all" });
+    chapters.forEach((el) => el.classList.remove("is-on"));
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    chapters.forEach((el, i) => {
+      tl.to(
+        el,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          onStart: () => el.classList.add("is-on"),
+        },
+        i === 0 ? 0 : "-=0.15"
+      );
+    });
+  });
+
+  // Wiggle
+  CustomWiggle.create("myWiggle", { wiggles: 8, type: "easeOut" });
+  document.querySelector("[data-s6-wiggle-btn]")?.addEventListener("click", () => {
+    const box = document.querySelector("[data-s6-wiggle]");
+    if (!box) return;
+    gsap.fromTo(
+      box,
+      { x: 0, rotation: 0 },
+      {
+        x: 24,
+        rotation: 12,
+        duration: 0.9,
+        ease: "myWiggle",
+        yoyo: true,
+        repeat: 1,
+        overwrite: true,
+      }
+    );
+  });
+
+  // Observer pad
+  const labels = ["Idle", "Climb", "Drift correct", "Touchdown"];
+  let obsIndex = 0;
+  const nEl = document.querySelector("[data-s6-obs-n]");
+  const labelEl = document.querySelector("[data-s6-obs-label]");
+  let obsBusy = false;
+
+  function setObs(i) {
+    obsIndex = (i + labels.length) % labels.length;
+    if (nEl) nEl.textContent = String(obsIndex + 1);
+    if (labelEl) {
+      gsap.fromTo(labelEl, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25 });
+      labelEl.textContent = labels[obsIndex];
+    }
+  }
+
+  Observer.create({
+    target: "[data-s6-observer]",
+    type: "wheel,touch",
+    wheelSpeed: -1,
+    onUp() {
+      if (obsBusy) return;
+      obsBusy = true;
+      setObs(obsIndex + 1);
+      gsap.delayedCall(0.35, () => {
+        obsBusy = false;
+      });
+    },
+    onDown() {
+      if (obsBusy) return;
+      obsBusy = true;
+      setObs(obsIndex - 1);
+      gsap.delayedCall(0.35, () => {
+        obsBusy = false;
+      });
+    },
+    tolerance: 20,
+    preventDefault: true,
+  });
+</script>

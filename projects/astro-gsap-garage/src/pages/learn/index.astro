@@ -1,0 +1,64 @@
+---
+import LearnLayout from "../../components/Learn/LearnLayout.astro";
+---
+
+<LearnLayout title="Astro + GSAP Learn">
+  <header class="learn-hero">
+    <p class="learn-eyebrow">Learning phase · product films untouched</p>
+    <h1>Five sessions. Real pages.</h1>
+    <p>
+      Open each route in the browser, click the demos, then View Source / DevTools to see what
+      Astro baked into HTML vs what GSAP runs after load. This is your temporary classroom at
+      <code>/learn/*</code>.
+    </p>
+  </header>
+
+  <div class="learn-grid">
+    <a class="learn-card" href="/learn/01-astro-basics">
+      <span class="learn-card__n">Session 01</span>
+      <h2>Astro basics</h2>
+      <p>Pages → URLs, components, public assets, build-time vs client scripts.</p>
+    </a>
+    <a class="learn-card" href="/learn/02-props-slots">
+      <span class="learn-card__n">Session 02</span>
+      <h2>Props + slots</h2>
+      <p>Pass data into components; nest HTML with default and named slots.</p>
+    </a>
+    <a class="learn-card" href="/learn/03-build-assets">
+      <span class="learn-card__n">Session 03</span>
+      <h2>Build & assets</h2>
+      <p>What <code>astro build</code> emits, public vs src, why Webflow Cloud cares.</p>
+    </a>
+    <a class="learn-card" href="/learn/04-gsap-flip">
+      <span class="learn-card__n">Session 04</span>
+      <h2>GSAP Flip</h2>
+      <p>Animate layout changes — grid ↔ list, thumbnail ↔ feature.</p>
+    </a>
+    <a class="learn-card" href="/learn/05-set-piece">
+      <span class="learn-card__n">Session 05</span>
+      <h2>Landing set piece</h2>
+      <p>ScrambleText + MorphSVG + ScrollTrigger — competition-ready craft.</p>
+    </a>
+    <a class="learn-card" href="/learn/06-explore">
+      <span class="learn-card__n">Session 06</span>
+      <h2>Explore more</h2>
+      <p>DrawSVG + MotionPath + timelines + CustomWiggle + Observer.</p>
+    </a>
+    <a class="learn-card" href="/learn/07-kitchen-sink">
+      <span class="learn-card__n">Session 07</span>
+      <h2>Kitchen sink</h2>
+      <p>Dump of plugins — stagger, Flip, Drag, Physics2D, eases, and more.</p>
+    </a>
+    <a class="learn-card" href="/learn/08-gsdevtools">
+      <span class="learn-card__n">Session 08</span>
+      <h2>GSDevTools</h2>
+      <p>The YouTube scrubber UI — play, pause, loop, in/out on a real timeline.</p>
+    </a>
+  </div>
+
+  <div class="learn-callout" style="margin-top: 2rem">
+    <strong>How to use this:</strong> do sessions in order. On each page, do the “Try this”
+    checklist before moving on. Ask questions on anything that feels fuzzy — we’ll go deeper
+    on that route.
+  </div>
+</LearnLayout>

@@ -1,0 +1,7 @@
+# Local Blender binaries / caches
+blender/**/*.blend1
+blender/**/*.blend2
+blender/**/exports/*.glb
+blender/**/assets/*
+!blender/**/assets/.gitkeep
+!blender/**/README.md

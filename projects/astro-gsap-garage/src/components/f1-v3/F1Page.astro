@@ -1,0 +1,45 @@
+---
+import HeroBoot from "../f1-v2/sections/HeroBoot.astro";
+import GridLights from "../f1-v2/sections/GridLights.astro";
+import Racetrack from "../f1-v2/sections/Racetrack.astro";
+import Aero from "../f1-v2/sections/Aero.astro";
+import GarageFlip from "../f1-v2/sections/GarageFlip.astro";
+import Telemetry from "../f1-v2/sections/Telemetry.astro";
+import Garage3D from "../shared/Garage3D.astro";
+import Close from "../f1-v2/sections/Close.astro";
+import BeatTicker from "../shared/BeatTicker.astro";
+---
+
+<main class="f1v2-page" data-f1-v3>
+  <HeroBoot />
+  <BeatTicker
+    accent="#7cffc4"
+    items={["GRID ARMED", "LIGHTS OUT", "RACING LINE", "DRS WINDOW", "ERS PUSH", "BOX BOX"]}
+  />
+  <GridLights />
+  <BeatTicker
+    accent="#ff2d55"
+    items={["SECTOR 1", "SECTOR 2", "SECTOR 3", "DELTA LIVE", "TYRE SOFT", "PIT WALL"]}
+  />
+  <Racetrack />
+  <BeatTicker items={["WIND TUNNEL", "CFD STREAM", "DRS OPEN", "DOWNFORCE", "DRAG MAP"]} />
+  <Aero />
+  <BeatTicker items={["FRONT WING", "FLOOR", "REAR WING", "POWER UNIT", "HALO"]} />
+  <GarageFlip />
+  <BeatTicker items={["ERS 100%", "TOP SPEED", "VS POLE", "RADIO OPEN"]} />
+  <Telemetry />
+  <Garage3D
+    compact
+    theme="f1"
+    modelSrc="/models/f1-amr23-parts.glb"
+    kicker="Beat 10 · Interactive finale"
+    title="AMR23 teardown"
+    lede="Bonus 3D stage after the GSAP film — wheels, CFD airflow, part HUD. Scroll to scrub the cameras."
+  />
+  <Close />
+</main>
+
+<script>
+  import { initF1V3 } from "./initF1V3.js";
+  initF1V3();
+</script>

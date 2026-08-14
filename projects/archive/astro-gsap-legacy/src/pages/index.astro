@@ -1,0 +1,46 @@
+---
+import "../styles/global.css";
+import "../styles/hub.css";
+import SiteNav from "../components/SiteNav/SiteNav.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>GSAP Lab — 3D Product Stage</title>
+    <meta name="description" content="Gamified Astro × GSAP × Three.js product showcase — Iron Man Mark 85 and Aston Martin AMR23." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <SiteNav current="home" />
+    <main class="hub">
+      <header class="hub__header">
+        <p class="hub__eyebrow">Astro × GSAP × Three.js</p>
+        <h1 class="hub__title">Product Stage</h1>
+        <p class="hub__lede">
+          Gamified 3D showcases with scroll-driven cameras, VFX, and interactive HUD.
+          Pick a subject below.
+        </p>
+      </header>
+
+      <div class="hub__grid">
+        <a class="hub-card" href="/f1">
+          <span class="hub-card__index">01 · F1</span>
+          <h2 class="hub-card__title">AMR23</h2>
+          <p class="hub-card__meta">Pinned 3D garage — wheels, airflow, part tour</p>
+          <p class="hub-card__plugins">Three.js + GSAP ScrollTrigger</p>
+        </a>
+        <a class="hub-card" href="/iron-man">
+          <span class="hub-card__index">02 · Suit</span>
+          <h2 class="hub-card__title">Mark 85</h2>
+          <p class="hub-card__meta">Rigged suit — poses, lasers, thrusters, visor HUD</p>
+          <p class="hub-card__plugins">Three.js + Mixamo rig</p>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

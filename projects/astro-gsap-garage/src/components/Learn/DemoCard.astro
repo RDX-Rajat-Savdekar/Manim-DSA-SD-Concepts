@@ -1,0 +1,28 @@
+---
+/**
+ * Session 2 demo: a card that takes props AND a default slot.
+ * Props = data you pass in.
+ * Slot = HTML/content the parent nests inside this component.
+ */
+interface Props {
+  title: string;
+  tag?: string;
+  tone?: "teal" | "coral";
+}
+
+const { title, tag = "component", tone = "teal" } = Astro.props;
+const accent = tone === "coral" ? "var(--learn-accent-2)" : "var(--learn-accent)";
+---
+
+<article class="card-shell" style={`--card-accent: ${accent}`}>
+  <header class="card-shell__head">
+    <strong style={`color: ${accent}`}>{title}</strong>
+    <span class="learn-badge">{tag}</span>
+  </header>
+  <div class="card-shell__body">
+    <slot />
+  </div>
+  <footer class="card-shell__foot">
+    Built at compile time · props + slot
+  </footer>
+</article>

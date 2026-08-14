@@ -1,0 +1,257 @@
+/* Iron Man v2 — HUD / assembly narrative */
+
+:root {
+  --im-bg: #0a0606;
+  --im-surface: #140c0c;
+  --im-border: #2a1818;
+  --im-text: #f5ebe0;
+  --im-muted: #a89080;
+  --im-gold: #f5b301;
+  --im-red: #ff2a2a;
+  --im-blue: #6a80ff;
+  --im-display: "Bebas Neue", system-ui, sans-serif;
+  --im-sans: "DM Sans", system-ui, sans-serif;
+  --im-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.imv2-body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 20% 0%, #3a1010 0%, transparent 50%),
+    radial-gradient(ellipse 50% 35% at 90% 10%, #1a2040 0%, transparent 45%),
+    var(--im-bg);
+  color: var(--im-text);
+  font-family: var(--im-sans);
+  line-height: 1.5;
+}
+
+.imv2-section {
+  position: relative;
+  padding: clamp(3rem, 8vh, 5rem) clamp(1rem, 4vw, 2.5rem);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.imv2-kicker {
+  font-family: var(--im-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--im-gold);
+  margin: 0 0 0.5rem;
+}
+
+.imv2-title {
+  font-family: var(--im-display);
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.75rem;
+}
+
+.imv2-lede {
+  max-width: 34rem;
+  color: var(--im-muted);
+  margin: 0 0 1.25rem;
+}
+
+.imv2-btn {
+  appearance: none;
+  border: 1px solid var(--im-gold);
+  background: transparent;
+  color: var(--im-gold);
+  font-family: var(--im-mono);
+  font-size: 0.78rem;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.imv2-btn--solid {
+  background: var(--im-gold);
+  color: #1a1000;
+  font-weight: 600;
+}
+
+.imv2-hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+.imv2-scramble {
+  font-family: var(--im-mono);
+  color: var(--im-red);
+  min-height: 1.4em;
+  margin: 0 0 1rem;
+}
+
+.imv2-reactor {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+}
+
+.imv2-reactor circle {
+  fill: none;
+  stroke: var(--im-gold);
+  stroke-width: 3;
+}
+
+.imv2-assembly {
+  position: relative;
+  min-height: min(56vh, 420px);
+  background: var(--im-surface);
+  border: 1px solid var(--im-border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  z-index: 2;
+}
+
+.imv2-assembly-canvas {
+  display: block;
+  width: 100%;
+  height: min(56vh, 420px);
+  background: #080505;
+}
+
+.imv2-assembly-meta {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--im-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(245, 179, 1, 0.75);
+  pointer-events: none;
+}
+
+.imv2-assembly svg {
+  width: 100%;
+  height: 320px;
+}
+
+.imv2-systems {
+  display: grid;
+  gap: 1rem;
+}
+
+.imv2-sys {
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid var(--im-border);
+  background: #100808;
+  opacity: 0.4;
+}
+
+.imv2-sys.is-on {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--im-gold) 45%, var(--im-border));
+}
+
+.imv2-sys strong {
+  font-family: var(--im-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--im-gold);
+  display: block;
+}
+
+.imv2-sys-svg {
+  width: 100%;
+  max-width: 280px;
+  margin-top: 0.75rem;
+  overflow: visible;
+}
+
+.imv2-core-wrap {
+  text-align: center;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+}
+
+.imv2-core {
+  position: relative;
+  width: min(220px, 52vw);
+  height: min(220px, 52vw);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 224, 138, 0.35) 0%, rgba(245, 179, 1, 0.12) 38%, transparent 68%),
+    rgba(16, 8, 8, 0.9);
+  border: 1px solid color-mix(in srgb, var(--im-gold) 40%, transparent);
+  box-shadow: 0 0 36px rgba(245, 179, 1, 0.22);
+  margin: 1rem auto;
+  overflow: hidden;
+}
+
+.imv2-core-schematic {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(245, 179, 1, 0.55));
+}
+
+.imv2-core-zap {
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  right: 18%;
+  top: 18%;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 8px rgba(255, 80, 40, 0.6));
+}
+
+.imv2-core-label {
+  font-family: var(--im-mono);
+  font-size: 0.8rem;
+  color: var(--im-muted);
+}
+
+.imv2-flight-sticky {
+  position: relative;
+  background: var(--im-surface);
+  border: 1px solid var(--im-border);
+  border-radius: 16px;
+  padding: 1rem;
+  z-index: 2;
+}
+
+.imv2-flight-svg {
+  width: 100%;
+  height: auto;
+  max-height: 50vh;
+}
+
+.imv2-flight-spacer {
+  display: none;
+}
+
+.imv2-close {
+  text-align: center;
+  padding-bottom: 5rem;
+}
+
+.imv2-close__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.imv2-close__links a {
+  color: var(--im-muted);
+  font-family: var(--im-mono);
+  font-size: 0.78rem;
+}

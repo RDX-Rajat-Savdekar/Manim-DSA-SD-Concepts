@@ -1,0 +1,32 @@
+---
+import HeroBoot from "../f1-v2/sections/HeroBoot.astro";
+import GridLights from "../f1-v2/sections/GridLights.astro";
+import Racetrack from "../f1-v2/sections/Racetrack.astro";
+import Aero from "../f1-v2/sections/Aero.astro";
+import GarageFlip from "../f1-v2/sections/GarageFlip.astro";
+import Garage3D from "../shared/Garage3D.astro";
+import Telemetry from "../f1-v2/sections/Telemetry.astro";
+import Close from "../f1-v2/sections/Close.astro";
+---
+
+<main class="f1v2-page" data-f1-v3>
+  <HeroBoot />
+  <GridLights />
+  <Racetrack />
+  <Aero />
+  <GarageFlip />
+  <Garage3D
+    theme="f1"
+    modelSrc="/models/f1-amr23-parts.glb"
+    kicker="3D garage · pinned"
+    title="AMR23 teardown"
+    lede="Scroll the pinned stage — wheels spin, CFD-style airflow streams, part HUD. Studio reflections only."
+  />
+  <Telemetry />
+  <Close />
+</main>
+
+<script>
+  import { initF1V3 } from "./initF1V3.js";
+  initF1V3();
+</script>
